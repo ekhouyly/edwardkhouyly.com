@@ -2,12 +2,17 @@
 // Run after adding or removing photos:  node scripts/build-manifest.mjs
 // Optional per-month captions: photos/YYYY/MM/captions.json
 //   { "title": "Summer in Lisbon", "photos": { "IMG_0412.jpg": "Alfama at dusk" } }
+// Optional trips with map pins: photos/trips.json (photos are named by the part after the date, e.g. "img_0136").
+// Smaller copies (small/, large/) and placeholder colours come from: python3 scripts/derive.py
 import { readdirSync, readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = new URL("../photos/", import.meta.url).pathname;
 const THUMBS = new URL("../thumbs/", import.meta.url).pathname;
 const IMAGE = /\.(jpe?g|png|webp|avif|gif)$/i;
+const REPO = new URL("../", import.meta.url).pathname;
+const colors = existsSync(join(ROOT, "colors.json")) ? JSON.parse(readFileSync(join(ROOT, "colors.json"), "utf8")) : {};
+const copy = (dir, rel) => (existsSync(join(REPO, dir, rel)) ? `${dir}/${rel}` : undefined);
 
 // Reads width/height from the file header so the gallery can reserve space before images load.
 function dimensions(file) {
@@ -54,6 +59,9 @@ const years = dirs(ROOT).sort((a, b) => b - a).map((year) => ({
       src: `photos/${year}/${month}/${f}`,
       // smaller copy for the grid, if one exists under thumbs/YYYY/MM/
       thumb: existsSync(join(THUMBS, year, month, f)) ? `thumbs/${year}/${month}/${f}` : `photos/${year}/${month}/${f}`,
+      small: copy("small", `${year}/${month}/${f}`),
+      large: copy("large", `${year}/${month}/${f}`),
+      bg: colors[f],
       caption: meta.photos?.[f] ?? "",
       ...dateOf(f),
       ...dimensions(join(dir, f)),
@@ -71,6 +79,12 @@ const more = existsSync(moreDir) ? readdirSync(moreDir).filter((f) => IMAGE.test
   ...dimensions(join(moreDir, f)),
 })) : [];
 
-writeFileSync(join(ROOT, "manifest.json"), JSON.stringify({ years, more }, null, 2) + "\n");
+const trips = existsSync(join(ROOT, "trips.json")) ? JSON.parse(readFileSync(join(ROOT, "trips.json"), "utf8")) : [];
+const known = new Set(years.flatMap((y) => y.months.flatMap((m) => m.photos.map((p) => p.src.match(/_([^/]+)\.\w+$/)[1]))));
+for (const t of trips) {
+  for (const id of [...t.photos, ...t.places.flatMap((p) => p.photos)]) if (!known.has(id)) console.warn(`trips.json: ${t.id} lists ${id}, which is not on the site`);
+}
+
+writeFileSync(join(ROOT, "manifest.json"), JSON.stringify({ years, more, trips }, null, 2) + "\n");
 const count = years.reduce((n, y) => n + y.months.reduce((k, m) => k + m.photos.length, 0), 0) + more.length;
 console.log(`manifest.json: ${count} photos across ${years.length} years`);

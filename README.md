@@ -9,9 +9,18 @@ A static photo gallery: favourite photos grouped by year and month, with a full-
    ```json
    { "title": "Autumn walks", "photos": { "2026-10-04_lake.jpg": "Morning on the lake" } }
    ```
-3. Run `node scripts/build-manifest.mjs` to refresh `photos/manifest.json`.
+3. Keep a clean copy (no watermark) of the 3000px photo and its ~1000px thumbnail at the same paths under the originals folder, then run:
+   ```sh
+   python3 scripts/watermark.py /path/to/originals   # stamps @eklphotos into photos/ and thumbs/
+   python3 scripts/derive.py                         # small/ and large/ copies, placeholder colours
+   node scripts/build-manifest.mjs                   # refreshes photos/manifest.json
+   ```
 
-Resize photos to about 3000px on the long edge, and put a ~1000px copy at the same path under `thumbs/` for the grid, so the site stays fast.
+## Trips
+
+`photos/trips.json` lists each trip, its places on the map (with coordinates) and which photos belong to each place. Photos are named by the part of the filename after the date, e.g. `img_0136`, so changing a photo's date doesn't break the trip. `build-manifest.mjs` warns about names it can't find.
+
+The map uses Leaflet (kept in `vendor/leaflet/`) with CARTO map tiles.
 
 ## Previewing locally
 

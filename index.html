@@ -7,6 +7,15 @@
   <script>try { if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}</script>
   <title>Edward Khouy-Ly · Photographs</title>
   <meta name="description" content="A collection of Edward Khouy-Ly's favourite photographs, year by year and month by month.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Edward Khouy-Ly · Photographs">
+  <meta property="og:description" content="Favourite photographs from Korea, Japan, the Maritimes and everyday life, by @eklphotos.">
+  <meta property="og:url" content="https://ekhouyly.github.io/edwardkhouyly.com/">
+  <meta property="og:image" content="https://ekhouyly.github.io/edwardkhouyly.com/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Family walking toward the rock arches at Hopewell Rocks">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -34,6 +43,13 @@
   </section>
 
   <main>
+    <section class="trips" id="trips" hidden>
+      <div class="trips-head">
+        <h2>Trips</h2>
+        <p>Tap a trip to see it on a map.</p>
+      </div>
+      <div class="trip-cards" id="trip-cards"></div>
+    </section>
     <div id="gallery"></div>
   </main>
 
@@ -41,6 +57,14 @@
     <p class="footer-name">Edward Khouy-Ly</p>
     <p>© <span id="year"></span> · <a href="#top">Back to top</a></p>
   </footer>
+
+  <section class="trip-page" id="trip-page" hidden aria-label="Trip">
+    <div class="trip-bar">
+      <a class="trip-back" href="#trips">‹ All photos</a>
+      <span class="trip-bar-name" id="trip-bar-name"></span>
+    </div>
+    <div class="trip-body" id="trip-body"></div>
+  </section>
 
   <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
     <div class="lb-top">

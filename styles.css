@@ -103,7 +103,58 @@ a { color: inherit; }
 
 /* Gallery */
 main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
-#gallery { padding-top: clamp(56px, 9vw, 120px); }
+#gallery { padding-top: clamp(40px, 6vw, 88px); }
+
+/* Trips: cards under the hero, each opening its own page with a map */
+.trips { padding-top: clamp(48px, 8vw, 104px); }
+.trips-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+.trips-head h2 { margin: 0; font-family: Fraunces, serif; font-weight: 300; font-size: clamp(40px, 6vw, 72px); letter-spacing: -0.03em; line-height: 1; }
+.trips-head p { margin: 0; color: var(--muted); font-size: 14px; }
+.trip-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.trip-card {
+  position: relative; display: block; aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden;
+  color: #fff; text-decoration: none; background: var(--tile);
+}
+.trip-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+.trip-card:hover img { transform: scale(1.05); }
+.trip-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,.66)); }
+.trip-card-text { position: absolute; left: 18px; right: 18px; bottom: 16px; z-index: 1; }
+.trip-card h3 { margin: 0; font-family: Fraunces, serif; font-weight: 400; font-size: 26px; line-height: 1.1; letter-spacing: -0.01em; }
+.trip-card p { margin: 6px 0 0; font-size: 13px; opacity: .88; letter-spacing: .02em; }
+.trip-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.trip-page {
+  position: fixed; inset: 0; z-index: 40; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--bg); color: var(--fg); animation: fade .25s ease;
+}
+.trip-page[hidden] { display: none; }
+.trip-bar {
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 18px;
+  padding: calc(14px + env(safe-area-inset-top, 0px)) var(--pad) 14px;
+  background: var(--header); backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  box-shadow: 0 1px 0 var(--line);
+}
+.trip-back { text-decoration: none; font-weight: 500; font-size: 14px; padding: 6px 12px 6px 8px; border-radius: 999px; background: color-mix(in srgb, currentColor 8%, transparent); white-space: nowrap; }
+.trip-back:hover { background: color-mix(in srgb, currentColor 14%, transparent); }
+.trip-bar-name { font-family: Fraunces, serif; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity .3s; }
+.trip-page.scrolled .trip-bar-name { opacity: 1; }
+.trip-body { padding: 0 var(--pad) 96px; max-width: 1680px; margin: 0 auto; }
+.trip-title { padding: clamp(32px, 6vw, 72px) 0 clamp(20px, 3vw, 32px); }
+.trip-title h1 { margin: 0; font-family: Fraunces, serif; font-weight: 300; font-size: clamp(44px, 8vw, 112px); line-height: .95; letter-spacing: -0.035em; }
+.trip-title p { margin: 14px 0 0; color: var(--muted); font-size: 14px; letter-spacing: .12em; text-transform: uppercase; }
+.trip-map { height: clamp(300px, 52vh, 560px); border-radius: 12px; overflow: hidden; background: var(--tile); margin-bottom: clamp(40px, 6vw, 72px); z-index: 0; }
+.trip-map .leaflet-control-attribution { font-size: 10px; }
+.pin { position: relative; width: 52px; height: 52px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(0,0,0,.35); background: #ccc center / cover; cursor: pointer; transition: transform .2s; }
+.pin:hover { transform: scale(1.1); }
+.pin span {
+  position: absolute; top: -6px; right: -8px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
+  background: var(--accent); color: #fff; font: 600 12px/22px 'Instrument Sans', sans-serif; text-align: center;
+}
+.leaflet-tooltip.pin-label { font: 500 13px 'Instrument Sans', sans-serif; border-radius: 8px; padding: 4px 10px; }
+.place { margin-bottom: clamp(40px, 5vw, 64px); scroll-margin-top: 84px; }
+.place h3 { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 12px; margin: 0 0 14px; font-family: Fraunces, serif; font-weight: 400; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.015em; }
+.place h3 span { white-space: nowrap; font-family: 'Instrument Sans', sans-serif; font-size: 13px; color: var(--muted); letter-spacing: .04em; }
+.place.flash h3 { color: var(--accent); transition: color .3s; }
 
 .year { margin-bottom: clamp(72px, 10vw, 140px); }
 .year-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vw, 56px); }
@@ -140,7 +191,7 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .grid::after { content: ""; flex-grow: 1000000; }
 .grid button {
   position: relative; display: block; flex: var(--r) 1 calc(var(--r) * var(--row)); aspect-ratio: var(--r);
-  margin: 0; padding: 0; border: 0; cursor: zoom-in; background: var(--tile); overflow: hidden; border-radius: 6px;
+  margin: 0; padding: 0; border: 0; cursor: zoom-in; background: var(--bgi, var(--tile)); overflow: hidden; border-radius: 6px;
   opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
 }
 .grid button.in { opacity: 1; transform: none; }
@@ -198,6 +249,8 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .lb-close { font-size: 26px !important; }
 
 @media (max-width: 760px) {
+  .trip-cards { grid-auto-flow: column; grid-auto-columns: 62%; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad) 6px; scrollbar-width: none; }
+  .trip-card { scroll-snap-align: start; }
   .month { grid-template-columns: 1fr; gap: 18px; }
   .month-head { position: static; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
   .month-title, .month-count { margin: 0; }
@@ -206,6 +259,8 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
   .grid button { border-radius: 4px; }
 }
 @media (max-width: 480px) {
+  .years a[href="#trips"] { display: none; } /* the trips sit right under the hero on phones */
+  .trip-card h3 { font-size: 22px; }
   .site-header { gap: 10px; }
   .brand { font-size: 16px; }
   .years a { padding: 5px 8px; font-size: 13px; }
