@@ -11,7 +11,7 @@ let current = 0;
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-fetch("photos/manifest.json")
+fetch("photos/manifest.json", { cache: "no-cache" }) // always pick up newly added photos
   .then((r) => r.json())
   .then(render)
   .catch(() => { gallery.textContent = "Photos could not be loaded."; });
