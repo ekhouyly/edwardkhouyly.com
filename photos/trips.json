@@ -35,11 +35,12 @@
     "id": "japan",
     "name": "Japan",
     "places": [
+      { "name": "Tokyo", "lat": 35.6762, "lng": 139.6503, "photos": ["img_7349"] },
       { "name": "Lake Ashi, Hakone", "lat": 35.2046, "lng": 139.0247, "photos": ["img_7353"] },
       { "name": "Fushimi Inari, Kyoto", "lat": 34.9671, "lng": 135.7727, "photos": ["dscf4592"] },
       { "name": "Arashiyama, Kyoto", "lat": 35.0094, "lng": 135.6668, "photos": ["img_7340"] },
+      { "name": "Kyoto", "lat": 35.0116, "lng": 135.7681, "photos": ["img_7336"] },
       { "name": "Atomic Bomb Dome, Hiroshima", "lat": 34.3955, "lng": 132.4536, "photos": ["img_7347"] }
-    ],
-    "photos": ["img_7336", "img_7349"]
+    ]
   }
 ]
