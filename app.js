@@ -10,6 +10,22 @@ const lbCaption = lightbox.querySelector("figcaption");
 let flat = []; // every photo in display order, for lightbox prev/next
 let current = 0;
 
+// White or black background, remembered on this device.
+const toggle = document.getElementById("theme-toggle");
+const themeColor = document.querySelector('meta[name="theme-color"]');
+function applyTheme(dark) {
+  if (dark) document.documentElement.dataset.theme = "dark";
+  else delete document.documentElement.dataset.theme;
+  toggle.ariaLabel = dark ? "Switch to white background" : "Switch to black background";
+  themeColor.content = dark ? "#000000" : "#ffffff";
+}
+applyTheme(document.documentElement.dataset.theme === "dark");
+toggle.addEventListener("click", () => {
+  const dark = document.documentElement.dataset.theme !== "dark";
+  applyTheme(dark);
+  try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+});
+
 document.getElementById("year").textContent = new Date().getFullYear();
 
 fetch("photos/manifest.json", { cache: "no-cache" }) // always pick up newly added photos

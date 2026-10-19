@@ -10,6 +10,18 @@
   color-scheme: light;
   --pad: max(clamp(16px, 4vw, 56px), env(safe-area-inset-left, 0px));
 }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --fg: #f2f1ee;
+  --muted: #8e9094;
+  --line: #222324;
+  --tile: #141516;
+  --header: rgba(0, 0, 0, 0.78);
+  --accent: #e08a5f;
+}
+body { transition: background .3s, color .3s; }
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 body {
@@ -41,6 +53,15 @@ a { color: inherit; }
   font-variant-numeric: tabular-nums; font-weight: 500; font-size: 14px; transition: opacity .2s, background .2s;
 }
 .years a:hover { opacity: 1; }
+.theme-toggle {
+  flex: none; display: grid; place-items: center; width: 34px; height: 34px; margin-left: 4px; padding: 0;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent); border-radius: 50%;
+  background: none; color: inherit; cursor: pointer; transition: background .2s;
+}
+.theme-toggle:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
+.theme-toggle svg { width: 16px; height: 16px; }
+.theme-toggle .moon, [data-theme="dark"] .theme-toggle .sun { display: block; }
+.theme-toggle .sun, [data-theme="dark"] .theme-toggle .moon { display: none; }
 .years a.active { opacity: 1; background: color-mix(in srgb, currentColor 14%, transparent); }
 
 /* Hero */
