@@ -312,7 +312,11 @@ function openTrip(trip) {
     const grid = el("div", { className: "grid" });
     for (const p of [...pl.photos].sort(byDate)) grid.append(tile(p, `${pl.name} · ${trip.name}`, items));
     const count = `${pl.photos.length} photo${pl.photos.length === 1 ? "" : "s"}`;
-    return el("section", { className: "place", id: `place-${i}` }, [el("h3", {}, [pl.name, el("span", { textContent: count })]), grid]);
+    // Cities with only a few photos sit side by side, sized so their photos share a row height.
+    const width = pl.photos.reduce((sum, p) => sum + p.w / p.h, 0);
+    const section = el("section", { className: width <= 4 ? "place compact" : "place", id: `place-${i}` }, [el("h3", {}, [pl.name, el("span", { textContent: count })]), grid]);
+    section.style.setProperty("--w", width.toFixed(3));
+    return section;
   });
   if (trip.others.length) {
     const grid = el("div", { className: "grid" });
@@ -332,7 +336,7 @@ function openTrip(trip) {
       el("h1", {}, [flag(trip), trip.name]),
       el("p", { textContent: `${trip.when} · ${trip.all.length} photos · ${trip.places.length} ${trip.places.length === 1 ? "place" : "places"}` }),
     ]),
-    ...sections,
+    el("div", { className: "places" }, sections),
     el("section", { className: "trip-map-section" }, [
       el("div", { className: "trip-map-head" }, [el("p", { className: "eyebrow", textContent: "The route" }), el("h2", { textContent: "Where these were taken" })]),
       el("div", { className: "trip-map-wrap" }, [map, stops]),
@@ -390,14 +394,18 @@ async function drawMap(node, trip) {
   }).addTo(map);
   const points = trip.places.map((pl) => [pl.lat, pl.lng]);
   if (points.length > 1) {
-    const accent = getComputedStyle(node).getPropertyValue("--route").trim();
-    L.polyline(points, { color: accent, weight: 2.5, opacity: 0.9, dashArray: "2 8", lineCap: "round", interactive: false }).addTo(map);
+    // Each leg takes the colour of the stop it leaves from, so two-colour flags alternate along the route.
+    const style = getComputedStyle(node);
+    const colors = [style.getPropertyValue("--accent").trim(), style.getPropertyValue("--route").trim()];
+    for (let i = 1; i < points.length; i++) {
+      L.polyline([points[i - 1], points[i]], { color: colors[(i - 1) % 2], weight: 2.5, opacity: 0.9, dashArray: "2 8", lineCap: "round", interactive: false }).addTo(map);
+    }
   }
   trip.places.forEach((pl, i) => {
     const cover = pl.photos[0];
     const icon = L.divIcon({
       className: "",
-      html: `<div class="pin" style="background-image:url('${cover.small || cover.thumb}')"><span>${i + 1}</span></div>`,
+      html: `<div class="pin${i % 2 ? " alt" : ""}" style="background-image:url('${cover.small || cover.thumb}')"><span>${i + 1}</span></div>`,
       iconSize: [56, 56], iconAnchor: [28, 28],
     });
     L.marker(points[i], { icon, title: pl.name, keyboard: true })

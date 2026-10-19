@@ -170,7 +170,11 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .stop-name { font-family: Fraunces, serif; font-size: 20px; line-height: 1.2; }
 .stop-meta { color: var(--muted); font-size: 12px; letter-spacing: .04em; margin-top: 2px; }
 .leaflet-tooltip.pin-label { font: 500 13px 'Instrument Sans', sans-serif; border-radius: 8px; padding: 4px 10px; }
-.place { margin-bottom: clamp(40px, 5vw, 64px); scroll-margin-top: 84px; }
+.places { display: flex; flex-wrap: wrap; align-items: flex-start; column-gap: clamp(20px, 2.5vw, 36px); --row: clamp(200px, 19vw, 300px); }
+.place { flex: 1 1 100%; min-width: 0; margin-bottom: clamp(40px, 5vw, 64px); scroll-margin-top: 84px; }
+.place.compact { flex: var(--w) 1 calc(var(--w) * var(--row)); max-width: calc(var(--w) * var(--row) * 1.7); }
+.places .grid { --row: inherit; }
+.place.compact .grid::after { display: none; } /* let a short row stretch to the city's full width */
 .place h3 { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 12px; margin: 0 0 14px; font-family: Fraunces, serif; font-weight: 400; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.015em; }
 .place h3 span { white-space: nowrap; font-family: 'Instrument Sans', sans-serif; font-size: 13px; color: var(--muted); letter-spacing: .04em; }
 .place.flash h3 { color: var(--accent); transition: color .3s; }
@@ -276,6 +280,7 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
   .month-head { position: static; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
   .month-title, .month-count { margin: 0; }
   .grid { --gap: 6px; --row: 150px; }
+  .places { --row: 150px; }
   .tile-date { display: none; }
   .grid button { border-radius: 4px; }
 }
@@ -311,3 +316,6 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 :root[data-theme="dark"] .trip-page[data-country="ca"] { --accent: #f0424f; --route: #f0424f; }
 :root[data-theme="dark"] .trip-page[data-country="mx"] { --accent: #2fa877; --route: #e8414f; }
 .trip-title::after { content: ""; display: block; width: 72px; height: 4px; margin-top: 22px; border-radius: 2px; background: linear-gradient(90deg, var(--accent) 50%, var(--route) 50%); }
+/* Two-colour flags alternate: every second stop uses the second colour. */
+.pin.alt span, .trip-stops li:nth-child(even) .stop-num { background: var(--route); }
+.trip-page[data-country] .trip-map-head .eyebrow { background: linear-gradient(90deg, var(--accent), var(--route)); -webkit-background-clip: text; background-clip: text; color: transparent; width: fit-content; }
