@@ -1712,51 +1712,6 @@
               "week": 32,
               "w": 1717,
               "h": 2576
-            },
-            {
-              "src": "photos/2025/08/2025-08-03_img_9441.jpg",
-              "thumb": "thumbs/2025/08/2025-08-03_img_9441.jpg",
-              "small": "small/2025/08/2025-08-03_img_9441.jpg",
-              "large": "large/2025/08/2025-08-03_img_9441.jpg",
-              "bg": [
-                "#c5bfb4",
-                "#7a664e"
-              ],
-              "caption": "",
-              "date": "2025-08-03",
-              "week": 31,
-              "w": 1717,
-              "h": 2576
-            },
-            {
-              "src": "photos/2025/08/2025-08-03_img_9440.jpg",
-              "thumb": "thumbs/2025/08/2025-08-03_img_9440.jpg",
-              "small": "small/2025/08/2025-08-03_img_9440.jpg",
-              "large": "large/2025/08/2025-08-03_img_9440.jpg",
-              "bg": [
-                "#a7acb1",
-                "#746451"
-              ],
-              "caption": "",
-              "date": "2025-08-03",
-              "week": 31,
-              "w": 1717,
-              "h": 2576
-            },
-            {
-              "src": "photos/2025/08/2025-08-03_dscf8009.jpg",
-              "thumb": "thumbs/2025/08/2025-08-03_dscf8009.jpg",
-              "small": "small/2025/08/2025-08-03_dscf8009.jpg",
-              "large": "large/2025/08/2025-08-03_dscf8009.jpg",
-              "bg": [
-                "#5389a7",
-                "#a0947f"
-              ],
-              "caption": "",
-              "date": "2025-08-03",
-              "week": 31,
-              "w": 1717,
-              "h": 2576
             }
           ]
         },
@@ -1836,6 +1791,51 @@
               "caption": "",
               "date": "2025-07-07",
               "week": 28,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2025/07/2025-07-06_img_9441.jpg",
+              "thumb": "thumbs/2025/07/2025-07-06_img_9441.jpg",
+              "small": "small/2025/07/2025-07-06_img_9441.jpg",
+              "large": "large/2025/07/2025-07-06_img_9441.jpg",
+              "bg": [
+                "#c5bfb4",
+                "#7a664e"
+              ],
+              "caption": "",
+              "date": "2025-07-06",
+              "week": 27,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2025/07/2025-07-06_img_9440.jpg",
+              "thumb": "thumbs/2025/07/2025-07-06_img_9440.jpg",
+              "small": "small/2025/07/2025-07-06_img_9440.jpg",
+              "large": "large/2025/07/2025-07-06_img_9440.jpg",
+              "bg": [
+                "#a7acb1",
+                "#746451"
+              ],
+              "caption": "",
+              "date": "2025-07-06",
+              "week": 27,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2025/07/2025-07-06_dscf8009.jpg",
+              "thumb": "thumbs/2025/07/2025-07-06_dscf8009.jpg",
+              "small": "small/2025/07/2025-07-06_dscf8009.jpg",
+              "large": "large/2025/07/2025-07-06_dscf8009.jpg",
+              "bg": [
+                "#5389a7",
+                "#a0947f"
+              ],
+              "caption": "",
+              "date": "2025-07-06",
+              "week": 27,
               "w": 1717,
               "h": 2576
             },
@@ -2174,11 +2174,13 @@
       "name": "Korea",
       "places": [
         {
-          "name": "Starfield Library, Seoul",
+          "name": "Seoul",
           "lat": 37.51,
           "lng": 127.0598,
           "photos": [
-            "dscf0261"
+            "dscf0261",
+            "img_2916",
+            "img_2917"
           ]
         },
         {
@@ -2225,10 +2227,6 @@
             "img_0162"
           ]
         }
-      ],
-      "photos": [
-        "img_2916",
-        "img_2917"
       ]
     },
     {
@@ -2257,6 +2255,14 @@
           ]
         },
         {
+          "name": "Nova Scotia",
+          "lat": 45.365,
+          "lng": -63.28,
+          "photos": [
+            "img_0311"
+          ]
+        },
+        {
           "name": "Hopewell Rocks, New Brunswick",
           "lat": 45.8177,
           "lng": -64.5767,
@@ -2280,9 +2286,6 @@
             "img_0307"
           ]
         }
-      ],
-      "photos": [
-        "img_0311"
       ]
     },
     {

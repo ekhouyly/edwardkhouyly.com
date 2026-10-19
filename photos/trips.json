@@ -3,13 +3,12 @@
     "id": "korea",
     "name": "Korea",
     "places": [
-      { "name": "Starfield Library, Seoul", "lat": 37.5100, "lng": 127.0598, "photos": ["dscf0261"] },
+      { "name": "Seoul", "lat": 37.5100, "lng": 127.0598, "photos": ["dscf0261", "img_2916", "img_2917"] },
       { "name": "Haeundae Blue Line Park, Busan", "lat": 35.1606, "lng": 129.1802, "photos": ["img_0136", "img_2918", "img_2919", "img_2920"] },
       { "name": "Gamcheon Culture Village, Busan", "lat": 35.0975, "lng": 129.0106, "photos": ["dscf8565", "dscf8605", "dscf8699", "dscf8725"] },
       { "name": "Jagalchi Market and Nampo, Busan", "lat": 35.0966, "lng": 129.0306, "photos": ["dscf8753", "dscf8763"] },
       { "name": "Jeju Island", "lat": 33.4580, "lng": 126.9425, "photos": ["dscf9326", "img_2921", "img_2922", "img_0158", "img_0161", "img_0162"] }
-    ],
-    "photos": ["img_2916", "img_2917"]
+    ]
   },
   {
     "id": "maritimes",
@@ -17,10 +16,10 @@
     "places": [
       { "name": "Halifax, Nova Scotia", "lat": 44.6476, "lng": -63.5728, "photos": ["dscf1461", "dscf1592", "img_0548", "img_0549"] },
       { "name": "Peggy's Cove, Nova Scotia", "lat": 44.4919, "lng": -63.9184, "photos": ["img_0300", "img_0301", "img_0302"] },
+      { "name": "Nova Scotia", "lat": 45.3650, "lng": -63.2800, "photos": ["img_0311"] },
       { "name": "Hopewell Rocks, New Brunswick", "lat": 45.8177, "lng": -64.5767, "photos": ["dscf2099", "dscf2107", "dscf2111", "dscf2118"] },
       { "name": "Prince Edward Island", "lat": 46.4400, "lng": -63.3800, "photos": ["dscf2178", "dscf2179", "dscf2281", "dscf2482", "img_0303", "img_0307"] }
-    ],
-    "photos": ["img_0311"]
+    ]
   },
   {
     "id": "cabo",

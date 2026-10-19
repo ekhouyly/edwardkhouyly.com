@@ -20,7 +20,7 @@ A static photo gallery: favourite photos grouped by year and month, with a full-
 
 `photos/trips.json` lists each trip, its places on the map (with coordinates) and which photos belong to each place. Photos are named by the part of the filename after the date, e.g. `img_0136`, so changing a photo's date doesn't break the trip. `build-manifest.mjs` warns about names it can't find.
 
-The map uses Leaflet (kept in `vendor/leaflet/`) with CARTO map tiles.
+The map uses Leaflet (kept in `vendor/leaflet/`) with OpenStreetMap tiles.
 
 ## Previewing locally
 
@@ -29,3 +29,7 @@ The map uses Leaflet (kept in `vendor/leaflet/`) with CARTO map tiles.
 ## Hosting
 
 Works as-is on GitHub Pages, Netlify or Vercel. Once the domain is set up, add it under Settings → Pages → Custom domain.
+
+## Link preview
+
+`og.jpg` is the image shown when the link is shared. A GitHub Action (`.github/workflows/link-preview.yml`) runs `scripts/og.py` every morning to pick a new random wide photo; run it by hand from the Actions tab, or locally with `python3 scripts/og.py`.

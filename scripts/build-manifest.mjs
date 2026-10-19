@@ -82,7 +82,7 @@ const more = existsSync(moreDir) ? readdirSync(moreDir).filter((f) => IMAGE.test
 const trips = existsSync(join(ROOT, "trips.json")) ? JSON.parse(readFileSync(join(ROOT, "trips.json"), "utf8")) : [];
 const known = new Set(years.flatMap((y) => y.months.flatMap((m) => m.photos.map((p) => p.src.match(/_([^/]+)\.\w+$/)[1]))));
 for (const t of trips) {
-  for (const id of [...t.photos, ...t.places.flatMap((p) => p.photos)]) if (!known.has(id)) console.warn(`trips.json: ${t.id} lists ${id}, which is not on the site`);
+  for (const id of [...(t.photos || []), ...t.places.flatMap((p) => p.photos)]) if (!known.has(id)) console.warn(`trips.json: ${t.id} lists ${id}, which is not on the site`);
 }
 
 writeFileSync(join(ROOT, "manifest.json"), JSON.stringify({ years, more, trips }, null, 2) + "\n");

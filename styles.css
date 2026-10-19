@@ -276,3 +276,4 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
   .grid button, .grid img, .hero-slides img { transition: opacity .3s; transform: none !important; }
   .hero-cue span { animation: none; }
 }
+:root[data-theme="dark"] .trip-map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }

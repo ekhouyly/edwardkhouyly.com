@@ -254,7 +254,7 @@ function renderTrips(trips, years) {
   const cards = document.getElementById("trip-cards");
   for (const trip of trips) {
     const places = trip.places.map((pl) => ({ ...pl, photos: pl.photos.map((id) => byId.get(id)).filter(Boolean) })).filter((pl) => pl.photos.length);
-    const others = trip.photos.map((id) => byId.get(id)).filter(Boolean);
+    const others = (trip.photos || []).map((id) => byId.get(id)).filter(Boolean);
     const all = [...places.flatMap((pl) => pl.photos), ...others];
     if (!all.length) continue;
     const t = { ...trip, places, others, all, when: dateSpan(all) };
@@ -352,11 +352,10 @@ async function drawMap(node, trip) {
   let L;
   try { L = await loadLeaflet(); } catch { node.remove(); return; }
   if (!node.isConnected) return;
-  const dark = document.documentElement.dataset.theme === "dark";
   const map = L.map(node, { scrollWheelZoom: false, zoomControl: true, attributionControl: true });
-  L.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "rastertiles/voyager"}/{z}/{x}/{y}{r}.png`, {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: "abcd", maxZoom: 19,
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 19,
   }).addTo(map);
   const points = trip.places.map((pl, i) => {
     const cover = pl.photos[0];
