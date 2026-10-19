@@ -386,13 +386,22 @@ async function drawMap(node, trip) {
   let L;
   try { L = await loadLeaflet(); } catch { node.closest(".trip-map-section").remove(); return; }
   if (!node.isConnected) return;
-  const map = L.map(node, { scrollWheelZoom: false, zoomControl: false, attributionControl: true });
+  // A drawn map rather than street tiles: plain land and sea, with the trip's country tinted.
+  let outline;
+  try { outline = await (await fetch(`photos/maps/${trip.id}.json`)).json(); } catch { outline = null; }
+  if (!node.isConnected) return;
+  const map = L.map(node, { scrollWheelZoom: false, zoomControl: false, attributionControl: true, zoomSnap: 0.25, minZoom: 4, maxZoom: 11 });
   L.control.zoom({ position: "bottomright" }).addTo(map);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    maxZoom: 19,
-  }).addTo(map);
+  map.attributionControl.setPrefix(false).addAttribution("Natural Earth");
   const points = trip.places.map((pl) => [pl.lat, pl.lng]);
+  if (points.length === 1) map.setView(points[0], 8);
+  else map.fitBounds(points, { padding: [80, 80], maxZoom: 9 });
+  if (outline) {
+    L.geoJSON(outline, {
+      interactive: false,
+      style: (f) => ({ className: f.properties.home ? "land home" : "land", weight: 1, fillOpacity: 1 }),
+    }).addTo(map);
+  }
   if (points.length > 1) {
     // Each leg takes the colour of the stop it leaves from, so two-colour flags alternate along the route.
     const style = getComputedStyle(node);
@@ -413,6 +422,5 @@ async function drawMap(node, trip) {
       .on("click", () => goToPlace(i))
       .addTo(map);
   });
-  if (points.length === 1) map.setView(points[0], 12);
-  else map.fitBounds(points, { padding: [70, 70], maxZoom: 12 });
+  if (outline) map.setMaxBounds(L.latLngBounds(outline.bounds)); // nothing is drawn past the outline's edge
 }

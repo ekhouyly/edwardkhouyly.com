@@ -20,7 +20,7 @@ A static photo gallery: favourite photos grouped by year and month, with a full-
 
 `photos/trips.json` lists each trip, its places on the map (with coordinates) and which photos belong to each place. Photos are named by the part of the filename after the date, e.g. `img_0136`, so changing a photo's date doesn't break the trip. `build-manifest.mjs` warns about names it can't find.
 
-The map uses Leaflet (kept in `vendor/leaflet/`) with OpenStreetMap tiles.
+The map uses Leaflet (kept in `vendor/leaflet/`) with a drawn outline map instead of street tiles. After changing `trips.json`, run `node scripts/build-maps.mjs` to rebuild `photos/maps/<trip>.json` from the Natural Earth coastlines in `scripts/data/` (world-atlas and topojson-client, both ISC licensed).
 
 ## Previewing locally
 
