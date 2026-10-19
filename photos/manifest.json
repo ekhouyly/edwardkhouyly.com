@@ -4,6 +4,21 @@
       "year": 2026,
       "months": [
         {
+          "month": 9,
+          "title": "Korea",
+          "photos": [
+            {
+              "src": "photos/2026/09/2026-09-04_dscf0261.jpg",
+              "thumb": "thumbs/2026/09/2026-09-04_dscf0261.jpg",
+              "caption": "",
+              "date": "2026-09-04",
+              "week": 36,
+              "w": 1717,
+              "h": 2576
+            }
+          ]
+        },
+        {
           "month": 8,
           "title": "Korea",
           "photos": [
