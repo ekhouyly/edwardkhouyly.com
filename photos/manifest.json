@@ -4,6 +4,75 @@
       "year": 2026,
       "months": [
         {
+          "month": 8,
+          "title": "Korea",
+          "photos": [
+            {
+              "src": "photos/2026/08/2026-08-30_dscf9326.jpg",
+              "thumb": "thumbs/2026/08/2026-08-30_dscf9326.jpg",
+              "caption": "",
+              "date": "2026-08-30",
+              "week": 35,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/08/2026-08-27_dscf8763.jpg",
+              "thumb": "thumbs/2026/08/2026-08-27_dscf8763.jpg",
+              "caption": "",
+              "date": "2026-08-27",
+              "week": 35,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/08/2026-08-27_dscf8753.jpg",
+              "thumb": "thumbs/2026/08/2026-08-27_dscf8753.jpg",
+              "caption": "",
+              "date": "2026-08-27",
+              "week": 35,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/08/2026-08-27_dscf8725.jpg",
+              "thumb": "thumbs/2026/08/2026-08-27_dscf8725.jpg",
+              "caption": "",
+              "date": "2026-08-27",
+              "week": 35,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/08/2026-08-27_dscf8699.jpg",
+              "thumb": "thumbs/2026/08/2026-08-27_dscf8699.jpg",
+              "caption": "",
+              "date": "2026-08-27",
+              "week": 35,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/08/2026-08-27_dscf8605.jpg",
+              "thumb": "thumbs/2026/08/2026-08-27_dscf8605.jpg",
+              "caption": "",
+              "date": "2026-08-27",
+              "week": 35,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/08/2026-08-27_dscf8565.jpg",
+              "thumb": "thumbs/2026/08/2026-08-27_dscf8565.jpg",
+              "caption": "",
+              "date": "2026-08-27",
+              "week": 35,
+              "w": 1717,
+              "h": 2576
+            }
+          ]
+        },
+        {
           "month": 7,
           "title": "",
           "photos": [
