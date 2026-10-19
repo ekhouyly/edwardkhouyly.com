@@ -46,7 +46,11 @@ function render({ years, more = [] }) {
   }
   for (const { year, months } of years) {
     yearNav.append(el("a", { href: `#y${year}`, textContent: year }));
-    const section = el("section", { className: "year", id: `y${year}` }, [el("h2", { textContent: year })]);
+    const count = months.reduce((n, m) => n + m.photos.length, 0);
+    const meta = `${count} photo${count === 1 ? "" : "s"} · ${months.length} month${months.length === 1 ? "" : "s"}`;
+    const section = el("section", { className: "year", id: `y${year}` }, [
+      el("div", { className: "year-head" }, [el("h2", { textContent: year }), el("p", { className: "year-meta", textContent: meta })]),
+    ]);
 
     for (const { month, title, photos } of months) {
       const label = `${MONTHS[month - 1]} ${year}`;
@@ -120,7 +124,10 @@ function tile(photo, where) {
   });
   img.addEventListener("load", () => img.classList.add("loaded"));
   if (img.complete) img.classList.add("loaded");
-  const btn = el("button", { type: "button", ariaLabel: `Open ${photo.caption || where}` }, [img]);
+  const kids = [img];
+  if (photo.date) kids.push(el("span", { className: "tile-date", textContent: new Date(`${photo.date}T00:00:00Z`).toLocaleDateString("en", { ...SHORT, year: "numeric" }) }));
+  const btn = el("button", { type: "button", ariaLabel: `Open ${photo.caption || where}` }, kids);
+  btn.style.setProperty("--r", (photo.w / photo.h).toFixed(4));
   btn.addEventListener("click", () => open(index));
   return btn;
 }

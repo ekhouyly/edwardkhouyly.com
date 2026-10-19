@@ -106,8 +106,11 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 #gallery { padding-top: clamp(56px, 9vw, 120px); }
 
 .year { margin-bottom: clamp(72px, 10vw, 140px); }
-.year > h2 {
-  font-family: Fraunces, serif; font-weight: 300; margin: 0 0 clamp(28px, 4vw, 56px);
+.year-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vw, 56px); }
+.year-meta { margin: 0 0 .6em; color: var(--muted); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+.year > h2 { margin-bottom: clamp(28px, 4vw, 56px) !important; }
+.year > h2, .year-head h2 {
+  font-family: Fraunces, serif; font-weight: 300; margin: 0;
   font-size: clamp(72px, 14vw, 200px); line-height: .85; letter-spacing: -0.04em;
   color: var(--fg); font-variant-numeric: lining-nums;
 }
@@ -132,20 +135,27 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .week h4::before { content: ""; width: 18px; height: 1px; background: var(--fg); align-self: center; opacity: .5; }
 .week h4 span { font-weight: 400; letter-spacing: .04em; text-transform: none; color: var(--muted); }
 
-.grid { columns: 3 260px; column-gap: var(--gap); }
+/* Justified rows: each photo keeps its shape and every row fills the width */
+.grid { display: flex; flex-wrap: wrap; gap: var(--gap); --row: clamp(220px, 24vw, 360px); }
+.grid::after { content: ""; flex-grow: 1000000; }
 .grid button {
-  position: relative; display: block; width: 100%; margin: 0 0 var(--gap); padding: 0; border: 0; cursor: zoom-in;
-  background: var(--tile); break-inside: avoid; overflow: hidden; border-radius: 6px;
+  position: relative; display: block; flex: var(--r) 1 calc(var(--r) * var(--row)); aspect-ratio: var(--r);
+  margin: 0; padding: 0; border: 0; cursor: zoom-in; background: var(--tile); overflow: hidden; border-radius: 6px;
   opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
 }
 .grid button.in { opacity: 1; transform: none; }
-.grid img { display: block; width: 100%; height: auto; transition: transform .9s cubic-bezier(.2,.7,.2,1), opacity .5s, filter .4s; opacity: 0; }
+.grid img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2,.7,.2,1), opacity .5s, filter .4s; opacity: 0; }
 .grid img.loaded { opacity: 1; }
 .grid button::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,.28)); opacity: 0; transition: opacity .4s;
 }
 .grid button:hover img { transform: scale(1.04); }
+.tile-date {
+  position: absolute; left: 12px; bottom: 10px; z-index: 1; color: #fff; font-size: 12px; font-weight: 500;
+  letter-spacing: .06em; opacity: 0; transform: translateY(4px); transition: opacity .35s, transform .35s; pointer-events: none;
+}
+.grid button:hover .tile-date { opacity: 1; transform: none; }
 .grid button:hover::after { opacity: 1; }
 .grid button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
@@ -191,8 +201,15 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
   .month { grid-template-columns: 1fr; gap: 18px; }
   .month-head { position: static; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
   .month-title, .month-count { margin: 0; }
-  .grid { columns: 2 140px; --gap: 6px; }
+  .grid { --gap: 6px; --row: 150px; }
+  .tile-date { display: none; }
   .grid button { border-radius: 4px; }
+}
+@media (max-width: 480px) {
+  .site-header { gap: 10px; }
+  .brand { font-size: 16px; }
+  .years a { padding: 5px 8px; font-size: 13px; }
+  .theme-toggle { width: 30px; height: 30px; }
 }
 @media (max-width: 640px) {
   .lightbox { grid-template-columns: 0 1fr 0; }
