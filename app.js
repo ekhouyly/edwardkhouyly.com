@@ -23,6 +23,10 @@ function el(tag, attrs = {}, children = []) {
 }
 
 function render({ years }) {
+  if (!years.length) {
+    gallery.append(el("p", { className: "empty", textContent: "New photographs are on their way." }));
+    return;
+  }
   for (const { year, months } of years) {
     yearNav.append(el("a", { href: `#y${year}`, textContent: year }));
     const section = el("section", { className: "year", id: `y${year}` }, [el("h2", { textContent: year })]);
