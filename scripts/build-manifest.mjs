@@ -6,6 +6,7 @@
 // Smaller copies (small/, large/) and placeholder colours come from: python3 scripts/derive.py
 import { readdirSync, readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 const ROOT = new URL("../photos/", import.meta.url).pathname;
 const THUMBS = new URL("../thumbs/", import.meta.url).pathname;
@@ -88,3 +89,13 @@ for (const t of trips) {
 writeFileSync(join(ROOT, "manifest.json"), JSON.stringify({ years, more, trips }, null, 2) + "\n");
 const count = years.reduce((n, y) => n + y.months.reduce((k, m) => k + m.photos.length, 0), 0) + more.length;
 console.log(`manifest.json: ${count} photos across ${years.length} years`);
+
+// Stamp index.html's links to app.js and styles.css with a hash of their contents,
+// so browsers fetch the new code after each change instead of a cached copy.
+const site = join(ROOT, "..");
+let html = readFileSync(join(site, "index.html"), "utf8");
+for (const f of ["app.js", "styles.css"]) {
+  const v = createHash("sha1").update(readFileSync(join(site, f))).digest("hex").slice(0, 8);
+  html = html.replace(new RegExp(`${f.replace(".", "\\.")}(\\?v=\\w+)?"`), `${f}?v=${v}"`);
+}
+writeFileSync(join(site, "index.html"), html);
