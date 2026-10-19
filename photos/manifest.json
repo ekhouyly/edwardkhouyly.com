@@ -2202,6 +2202,7 @@
     {
       "id": "korea",
       "name": "Korea",
+      "country": "kr",
       "cover": "img_2916",
       "places": [
         {
@@ -2249,6 +2250,7 @@
     {
       "id": "maritimes",
       "name": "Maritimes",
+      "country": "ca",
       "cover": "img_0548",
       "places": [
         {
@@ -2295,6 +2297,7 @@
     {
       "id": "cabo",
       "name": "Cabo San Lucas, Mexico",
+      "country": "mx",
       "places": [
         {
           "name": "Cabo San Lucas",
@@ -2318,6 +2321,8 @@
     {
       "id": "japan",
       "name": "Japan",
+      "country": "jp",
+      "cover": "dscf4592",
       "places": [
         {
           "name": "Tokyo",

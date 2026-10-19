@@ -252,6 +252,7 @@ function renderTrips(trips, years) {
   for (const y of years) for (const m of y.months) for (const p of m.photos) byId.set(p.src.match(/_([^/]+)\.\w+$/)[1], p);
   const section = document.getElementById("trips");
   const cards = document.getElementById("trip-cards");
+  const built = [];
   for (const trip of trips) {
     const places = trip.places.map((pl) => ({ ...pl, photos: pl.photos.map((id) => byId.get(id)).filter(Boolean) })).filter((pl) => pl.photos.length);
     places.sort((a, b) => Math.min(...a.photos.map((p) => Date.parse(p.date))) - Math.min(...b.photos.map((p) => Date.parse(p.date))));
@@ -261,18 +262,30 @@ function renderTrips(trips, years) {
     const t = { ...trip, places, others, all, when: dateSpan(all) };
     tripsById.set(trip.id, t);
     const cover = (trip.cover && byId.get(trip.cover)) || all.find((p) => p.h > p.w) || all[0];
-    cards.append(el("a", { className: "trip-card", href: `#trip/${trip.id}` }, [
-      el("img", { src: cover.small || cover.thumb, alt: "", loading: "lazy", decoding: "async" }),
-      el("div", { className: "trip-card-text" }, [
-        el("h3", { textContent: trip.name }),
-        el("p", { textContent: `${t.when} · ${all.length} photos` }),
+    const start = all.map((p) => p.date).filter(Boolean).sort()[0] || "";
+    built.push({ start, node: el("div", { className: "trip-item" }, [
+      // A stop on the timeline above the cards, oldest trip on the left.
+      el("div", { className: "trip-tick" }, [el("span", { className: "trip-dot" }), el("span", { textContent: dateSpan([{ date: start }]) })]),
+      el("a", { className: "trip-card", href: `#trip/${trip.id}` }, [
+        el("img", { src: cover.small || cover.thumb, alt: "", loading: "lazy", decoding: "async" }),
+        el("div", { className: "trip-card-text" }, [
+          el("h3", {}, [flag(trip), trip.name]),
+          el("p", { textContent: `${t.when} · ${all.length} photos` }),
+        ]),
       ]),
-    ]));
+    ]) });
   }
+  built.sort((a, b) => a.start.localeCompare(b.start));
+  cards.append(...built.map((b) => b.node));
   if (!tripsById.size) return;
   section.hidden = false;
   yearNav.prepend(el("a", { href: "#trips", textContent: "Trips" }));
   route();
+}
+
+// The trip's country flag (vendor/flags), shown before its name.
+function flag(trip) {
+  return trip.country ? el("img", { className: "flag", src: `vendor/flags/${trip.country}.svg`, alt: "" }) : "";
 }
 
 // "Aug – Sep 2026", "Jul 2024" or "Dec 2025 – Jan 2026"
@@ -311,8 +324,8 @@ function openTrip(trip) {
   const map = el("div", { className: "trip-map", id: "trip-map" });
   tripBody.replaceChildren(
     el("div", { className: "trip-title" }, [
-      el("h1", { textContent: trip.name }),
-      el("p", { textContent: `${trip.when} · ${trip.all.length} photos · ${trip.places.length} places` }),
+      el("h1", {}, [flag(trip), trip.name]),
+      el("p", { textContent: `${trip.when} · ${trip.all.length} photos · ${trip.places.length} ${trip.places.length === 1 ? "place" : "places"}` }),
     ]),
     map,
     ...sections,
