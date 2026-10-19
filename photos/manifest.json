@@ -4,6 +4,39 @@
       "year": 2026,
       "months": [
         {
+          "month": 10,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2026/10/2026-10-06_img_3187.jpg",
+              "thumb": "thumbs/2026/10/2026-10-06_img_3187.jpg",
+              "caption": "",
+              "date": "2026-10-06",
+              "week": 41,
+              "w": 1451,
+              "h": 2176
+            },
+            {
+              "src": "photos/2026/10/2026-10-06_dscf0942.jpg",
+              "thumb": "thumbs/2026/10/2026-10-06_dscf0942.jpg",
+              "caption": "",
+              "date": "2026-10-06",
+              "week": 41,
+              "w": 1463,
+              "h": 2195
+            },
+            {
+              "src": "photos/2026/10/2026-10-06_dscf0941.jpg",
+              "thumb": "thumbs/2026/10/2026-10-06_dscf0941.jpg",
+              "caption": "",
+              "date": "2026-10-06",
+              "week": 41,
+              "w": 1707,
+              "h": 2560
+            }
+          ]
+        },
+        {
           "month": 9,
           "title": "Korea",
           "photos": [
@@ -754,15 +787,6 @@
           "title": "",
           "photos": [
             {
-              "src": "photos/2025/09/2025-09-27_img_3187.jpg",
-              "thumb": "thumbs/2025/09/2025-09-27_img_3187.jpg",
-              "caption": "",
-              "date": "2025-09-27",
-              "week": 39,
-              "w": 1451,
-              "h": 2176
-            },
-            {
               "src": "photos/2025/09/2025-09-27_dscf0959.jpg",
               "thumb": "thumbs/2025/09/2025-09-27_dscf0959.jpg",
               "caption": "",
@@ -770,24 +794,6 @@
               "week": 39,
               "w": 1717,
               "h": 2576
-            },
-            {
-              "src": "photos/2025/09/2025-09-27_dscf0942.jpg",
-              "thumb": "thumbs/2025/09/2025-09-27_dscf0942.jpg",
-              "caption": "",
-              "date": "2025-09-27",
-              "week": 39,
-              "w": 1463,
-              "h": 2195
-            },
-            {
-              "src": "photos/2025/09/2025-09-27_dscf0941.jpg",
-              "thumb": "thumbs/2025/09/2025-09-27_dscf0941.jpg",
-              "caption": "",
-              "date": "2025-09-27",
-              "week": 39,
-              "w": 1707,
-              "h": 2560
             },
             {
               "src": "photos/2025/09/2025-09-27_dscf0860.jpg",
