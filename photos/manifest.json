@@ -595,7 +595,7 @@
         },
         {
           "month": 10,
-          "title": "",
+          "title": "Nova Scotia, New Brunswick & PEI",
           "photos": [
             {
               "src": "photos/2025/10/2025-10-31_dscf3113.jpg",
@@ -706,6 +706,33 @@
               "h": 2576
             },
             {
+              "src": "photos/2025/10/2025-10-12_img_0302.jpg",
+              "thumb": "thumbs/2025/10/2025-10-12_img_0302.jpg",
+              "caption": "",
+              "date": "2025-10-12",
+              "week": 41,
+              "w": 2576,
+              "h": 1717
+            },
+            {
+              "src": "photos/2025/10/2025-10-12_img_0301.jpg",
+              "thumb": "thumbs/2025/10/2025-10-12_img_0301.jpg",
+              "caption": "",
+              "date": "2025-10-12",
+              "week": 41,
+              "w": 2576,
+              "h": 1717
+            },
+            {
+              "src": "photos/2025/10/2025-10-12_img_0300.jpg",
+              "thumb": "thumbs/2025/10/2025-10-12_img_0300.jpg",
+              "caption": "",
+              "date": "2025-10-12",
+              "week": 41,
+              "w": 1717,
+              "h": 2576
+            },
+            {
               "src": "photos/2025/10/2025-10-11_img_0549.jpg",
               "thumb": "thumbs/2025/10/2025-10-11_img_0549.jpg",
               "caption": "",
@@ -724,56 +751,29 @@
               "h": 2576
             },
             {
-              "src": "photos/2025/10/2025-10-09_dscf1256.jpg",
-              "thumb": "thumbs/2025/10/2025-10-09_dscf1256.jpg",
+              "src": "photos/2025/10/2025-10-11_dscf1592.jpg",
+              "thumb": "thumbs/2025/10/2025-10-11_dscf1592.jpg",
               "caption": "",
-              "date": "2025-10-09",
+              "date": "2025-10-11",
               "week": 41,
               "w": 1717,
               "h": 2576
             },
             {
-              "src": "photos/2025/10/2025-10-01_img_0302.jpg",
-              "thumb": "thumbs/2025/10/2025-10-01_img_0302.jpg",
+              "src": "photos/2025/10/2025-10-11_dscf1461.jpg",
+              "thumb": "thumbs/2025/10/2025-10-11_dscf1461.jpg",
               "caption": "",
-              "date": "2025-10-01",
-              "week": 40,
-              "w": 2576,
-              "h": 1717
-            },
-            {
-              "src": "photos/2025/10/2025-10-01_img_0301.jpg",
-              "thumb": "thumbs/2025/10/2025-10-01_img_0301.jpg",
-              "caption": "",
-              "date": "2025-10-01",
-              "week": 40,
-              "w": 2576,
-              "h": 1717
-            },
-            {
-              "src": "photos/2025/10/2025-10-01_img_0300.jpg",
-              "thumb": "thumbs/2025/10/2025-10-01_img_0300.jpg",
-              "caption": "",
-              "date": "2025-10-01",
-              "week": 40,
+              "date": "2025-10-11",
+              "week": 41,
               "w": 1717,
               "h": 2576
             },
             {
-              "src": "photos/2025/10/2025-10-01_dscf1592.jpg",
-              "thumb": "thumbs/2025/10/2025-10-01_dscf1592.jpg",
+              "src": "photos/2025/10/2025-10-09_dscf1256.jpg",
+              "thumb": "thumbs/2025/10/2025-10-09_dscf1256.jpg",
               "caption": "",
-              "date": "2025-10-01",
-              "week": 40,
-              "w": 1717,
-              "h": 2576
-            },
-            {
-              "src": "photos/2025/10/2025-10-01_dscf1461.jpg",
-              "thumb": "thumbs/2025/10/2025-10-01_dscf1461.jpg",
-              "caption": "",
-              "date": "2025-10-01",
-              "week": 40,
+              "date": "2025-10-09",
+              "week": 41,
               "w": 1717,
               "h": 2576
             }
