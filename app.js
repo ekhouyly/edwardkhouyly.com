@@ -264,8 +264,6 @@ function renderTrips(trips, years) {
     const cover = (trip.cover && byId.get(trip.cover)) || all.find((p) => p.h > p.w) || all[0];
     const start = all.map((p) => p.date).filter(Boolean).sort()[0] || "";
     built.push({ start, node: el("div", { className: "trip-item" }, [
-      // A stop on the timeline above the cards, oldest trip on the left.
-      el("div", { className: "trip-tick" }, [el("span", { className: "trip-dot" }), el("span", { textContent: dateSpan([{ date: start }]) })]),
       el("a", { className: "trip-card", href: `#trip/${trip.id}` }, [
         el("img", { src: cover.small || cover.thumb, alt: "", loading: "lazy", decoding: "async" }),
         el("div", { className: "trip-card-text" }, [

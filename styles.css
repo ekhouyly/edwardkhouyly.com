@@ -112,12 +112,6 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .trips-head p { margin: 0; color: var(--muted); font-size: 14px; }
 .trip-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 .trip-item { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-.trip-tick { position: relative; display: flex; align-items: center; height: 20px; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.trip-tick::before { content: ""; position: absolute; left: 0; right: -14px; top: 50%; border-top: 1px solid var(--muted); opacity: .45; }
-.trip-item:last-child .trip-tick::before { right: 0; }
-.trip-tick span { position: relative; background: var(--bg); }
-.trip-tick span:last-child { padding: 0 10px; }
-.trip-dot { width: 11px; height: 11px; flex: none; border-radius: 50%; background: var(--accent) !important; box-shadow: 0 0 0 4px var(--bg); }
 .trip-card {
   position: relative; display: block; aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden;
   color: #fff; text-decoration: none; background: var(--tile);
