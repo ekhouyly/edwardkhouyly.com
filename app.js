@@ -1,3 +1,4 @@
+const SHORT = { month: "short", day: "numeric", timeZone: "UTC" };
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const gallery = document.getElementById("gallery");
@@ -33,26 +34,54 @@ function render({ years }) {
 
     for (const { month, title, photos } of months) {
       const label = `${MONTHS[month - 1]} ${year}`;
-      const grid = el("div", { className: "grid" });
-      for (const photo of photos) {
-        const index = flat.push({ ...photo, label }) - 1;
-        const img = el("img", {
-          src: photo.thumb || photo.src, alt: photo.caption || label, loading: "lazy", decoding: "async",
-          width: photo.w, height: photo.h,
-        });
-        img.addEventListener("load", () => img.classList.add("loaded"));
-        if (img.complete) img.classList.add("loaded");
-        const btn = el("button", { type: "button", ariaLabel: `Open ${photo.caption || label}` }, [img]);
-        btn.addEventListener("click", () => open(index));
-        grid.append(btn);
+      const weeks = el("div", { className: "weeks" });
+      for (const { week, photos: inWeek } of groupByWeek(photos)) {
+        const grid = el("div", { className: "grid" });
+        for (const photo of inWeek) {
+          const where = week ? `Week ${week} · ${label}` : label;
+          const index = flat.push({ ...photo, label: where }) - 1;
+          const img = el("img", {
+            src: photo.thumb || photo.src, alt: photo.caption || where, loading: "lazy", decoding: "async",
+            width: photo.w, height: photo.h,
+          });
+          img.addEventListener("load", () => img.classList.add("loaded"));
+          if (img.complete) img.classList.add("loaded");
+          const btn = el("button", { type: "button", ariaLabel: `Open ${photo.caption || where}` }, [img]);
+          btn.addEventListener("click", () => open(index));
+          grid.append(btn);
+        }
+        const block = el("div", { className: "week" });
+        if (week) block.append(el("h4", {}, [`Week ${week}`, el("span", { textContent: weekRange(inWeek[0].date) })]));
+        block.append(grid);
+        weeks.append(block);
       }
       const heading = el("h3", { textContent: MONTHS[month - 1] });
       if (title) heading.append(el("span", { textContent: title }));
-      section.append(el("div", { className: "month", id: `y${year}-${String(month).padStart(2, "0")}` }, [heading, grid]));
+      section.append(el("div", { className: "month", id: `y${year}-${String(month).padStart(2, "0")}` }, [heading, weeks]));
     }
     gallery.append(section);
   }
   highlightYearOnScroll();
+}
+
+// Photos arrive newest first; consecutive photos in the same week share a block.
+function groupByWeek(photos) {
+  const groups = [];
+  for (const photo of photos) {
+    const last = groups.at(-1);
+    if (last && last.week === photo.week) last.photos.push(photo);
+    else groups.push({ week: photo.week, photos: [photo] });
+  }
+  return groups;
+}
+
+// "Aug 24 – 30" for the Monday-to-Sunday week containing the date.
+function weekRange(date) {
+  const d = new Date(`${date}T00:00:00Z`);
+  const monday = new Date(d - ((d.getUTCDay() + 6) % 7) * 864e5);
+  const sunday = new Date(+monday + 6 * 864e5);
+  const end = monday.getUTCMonth() === sunday.getUTCMonth() ? sunday.getUTCDate() : sunday.toLocaleDateString("en", SHORT);
+  return `${monday.toLocaleDateString("en", SHORT)} – ${end}`;
 }
 
 function highlightYearOnScroll() {
