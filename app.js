@@ -273,7 +273,7 @@ function renderTrips(trips, years) {
       ]),
     ]) });
   }
-  built.sort((a, b) => a.start.localeCompare(b.start));
+  built.sort((a, b) => b.start.localeCompare(a.start)); // newest trip first
   cards.append(...built.map((b) => b.node));
   if (!tripsById.size) return;
   section.hidden = false;
