@@ -254,6 +254,7 @@ function renderTrips(trips, years) {
   const cards = document.getElementById("trip-cards");
   for (const trip of trips) {
     const places = trip.places.map((pl) => ({ ...pl, photos: pl.photos.map((id) => byId.get(id)).filter(Boolean) })).filter((pl) => pl.photos.length);
+    places.sort((a, b) => Math.min(...a.photos.map((p) => Date.parse(p.date))) - Math.min(...b.photos.map((p) => Date.parse(p.date))));
     const others = (trip.photos || []).map((id) => byId.get(id)).filter(Boolean);
     const all = [...places.flatMap((pl) => pl.photos), ...others];
     if (!all.length) continue;

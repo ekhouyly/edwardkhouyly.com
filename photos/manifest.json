@@ -1795,6 +1795,17 @@
               "h": 2576
             },
             {
+              "src": "photos/2025/07/2025-07-07_dscf7296.jpg",
+              "thumb": "thumbs/2025/07/2025-07-07_dscf7296.jpg",
+              "small": "small/2025/07/2025-07-07_dscf7296.jpg",
+              "large": "large/2025/07/2025-07-07_dscf7296.jpg",
+              "caption": "",
+              "date": "2025-07-07",
+              "week": 28,
+              "w": 2000,
+              "h": 3000
+            },
+            {
               "src": "photos/2025/07/2025-07-06_img_9441.jpg",
               "thumb": "thumbs/2025/07/2025-07-06_img_9441.jpg",
               "small": "small/2025/07/2025-07-06_img_9441.jpg",
@@ -1870,6 +1881,17 @@
               "h": 2576
             },
             {
+              "src": "photos/2025/07/2025-07-05_dscf6738.jpg",
+              "thumb": "thumbs/2025/07/2025-07-05_dscf6738.jpg",
+              "small": "small/2025/07/2025-07-05_dscf6738.jpg",
+              "large": "large/2025/07/2025-07-05_dscf6738.jpg",
+              "caption": "",
+              "date": "2025-07-05",
+              "week": 27,
+              "w": 3000,
+              "h": 2000
+            },
+            {
               "src": "photos/2025/07/2025-07-04_f323d297.jpg",
               "thumb": "thumbs/2025/07/2025-07-04_f323d297.jpg",
               "small": "small/2025/07/2025-07-04_f323d297.jpg",
@@ -1883,6 +1905,17 @@
               "week": 27,
               "w": 1638,
               "h": 2048
+            },
+            {
+              "src": "photos/2025/07/2025-07-04_dscf6083.jpg",
+              "thumb": "thumbs/2025/07/2025-07-04_dscf6083.jpg",
+              "small": "small/2025/07/2025-07-04_dscf6083.jpg",
+              "large": "large/2025/07/2025-07-04_dscf6083.jpg",
+              "caption": "",
+              "date": "2025-07-04",
+              "week": 27,
+              "w": 2000,
+              "h": 3000
             }
           ]
         },
@@ -2175,8 +2208,8 @@
       "places": [
         {
           "name": "Seoul",
-          "lat": 37.51,
-          "lng": 127.0598,
+          "lat": 37.5665,
+          "lng": 126.978,
           "photos": [
             "dscf0261",
             "img_2916",
@@ -2184,38 +2217,24 @@
           ]
         },
         {
-          "name": "Haeundae Blue Line Park, Busan",
-          "lat": 35.1606,
-          "lng": 129.1802,
+          "name": "Busan",
+          "lat": 35.1796,
+          "lng": 129.0756,
           "photos": [
             "img_0136",
             "img_2918",
             "img_2919",
-            "img_2920"
-          ]
-        },
-        {
-          "name": "Gamcheon Culture Village, Busan",
-          "lat": 35.0975,
-          "lng": 129.0106,
-          "photos": [
+            "img_2920",
             "dscf8565",
             "dscf8605",
             "dscf8699",
-            "dscf8725"
-          ]
-        },
-        {
-          "name": "Jagalchi Market and Nampo, Busan",
-          "lat": 35.0966,
-          "lng": 129.0306,
-          "photos": [
+            "dscf8725",
             "dscf8753",
             "dscf8763"
           ]
         },
         {
-          "name": "Jeju Island",
+          "name": "Jeju",
           "lat": 33.458,
           "lng": 126.9425,
           "photos": [
@@ -2234,36 +2253,22 @@
       "name": "Nova Scotia, New Brunswick & PEI",
       "places": [
         {
-          "name": "Halifax, Nova Scotia",
-          "lat": 44.6476,
-          "lng": -63.5728,
+          "name": "Halifax",
+          "lat": 44.6488,
+          "lng": -63.5752,
           "photos": [
             "dscf1461",
             "dscf1592",
             "img_0548",
-            "img_0549"
-          ]
-        },
-        {
-          "name": "Peggy's Cove, Nova Scotia",
-          "lat": 44.4919,
-          "lng": -63.9184,
-          "photos": [
+            "img_0549",
             "img_0300",
             "img_0301",
-            "img_0302"
-          ]
-        },
-        {
-          "name": "Nova Scotia",
-          "lat": 45.365,
-          "lng": -63.28,
-          "photos": [
+            "img_0302",
             "img_0311"
           ]
         },
         {
-          "name": "Hopewell Rocks, New Brunswick",
+          "name": "New Brunswick",
           "lat": 45.8177,
           "lng": -64.5767,
           "photos": [
@@ -2293,34 +2298,22 @@
       "name": "Cabo San Lucas",
       "places": [
         {
-          "name": "Cabo San Lucas Marina",
-          "lat": 22.882,
-          "lng": -109.9105,
+          "name": "Cabo San Lucas",
+          "lat": 22.8905,
+          "lng": -109.9167,
           "photos": [
-            "img_0705"
-          ]
-        },
-        {
-          "name": "Land's End",
-          "lat": 22.8755,
-          "lng": -109.8985,
-          "photos": [
-            "img_0707"
-          ]
-        },
-        {
-          "name": "Médano Beach",
-          "lat": 22.889,
-          "lng": -109.904,
-          "photos": [
+            "img_0705",
+            "img_0707",
             "img_0706",
             "dscf8009",
             "img_9440",
-            "img_9441"
+            "img_9441",
+            "dscf6083",
+            "dscf6738",
+            "dscf7296"
           ]
         }
-      ],
-      "photos": []
+      ]
     },
     {
       "id": "japan",
@@ -2335,27 +2328,11 @@
           ]
         },
         {
-          "name": "Lake Ashi, Hakone",
-          "lat": 35.2046,
-          "lng": 139.0247,
+          "name": "Hakone",
+          "lat": 35.2324,
+          "lng": 139.1069,
           "photos": [
             "img_7353"
-          ]
-        },
-        {
-          "name": "Fushimi Inari, Kyoto",
-          "lat": 34.9671,
-          "lng": 135.7727,
-          "photos": [
-            "dscf4592"
-          ]
-        },
-        {
-          "name": "Arashiyama, Kyoto",
-          "lat": 35.0094,
-          "lng": 135.6668,
-          "photos": [
-            "img_7340"
           ]
         },
         {
@@ -2363,13 +2340,15 @@
           "lat": 35.0116,
           "lng": 135.7681,
           "photos": [
+            "dscf4592",
+            "img_7340",
             "img_7336"
           ]
         },
         {
-          "name": "Atomic Bomb Dome, Hiroshima",
-          "lat": 34.3955,
-          "lng": 132.4536,
+          "name": "Hiroshima",
+          "lat": 34.3853,
+          "lng": 132.4553,
           "photos": [
             "img_7347"
           ]
