@@ -4,6 +4,74 @@
       "year": 2026,
       "months": [
         {
+          "month": 9,
+          "title": "Korea",
+          "photos": [
+            {
+              "src": "photos/2026/09/dscf0261.jpg",
+              "thumb": "thumbs/2026/09/dscf0261.jpg",
+              "caption": "",
+              "w": 2000,
+              "h": 3000
+            }
+          ]
+        },
+        {
+          "month": 8,
+          "title": "Korea",
+          "photos": [
+            {
+              "src": "photos/2026/08/dscf8565.jpg",
+              "thumb": "thumbs/2026/08/dscf8565.jpg",
+              "caption": "",
+              "w": 2000,
+              "h": 3000
+            },
+            {
+              "src": "photos/2026/08/dscf8605.jpg",
+              "thumb": "thumbs/2026/08/dscf8605.jpg",
+              "caption": "",
+              "w": 2000,
+              "h": 3000
+            },
+            {
+              "src": "photos/2026/08/dscf8699.jpg",
+              "thumb": "thumbs/2026/08/dscf8699.jpg",
+              "caption": "",
+              "w": 2000,
+              "h": 3000
+            },
+            {
+              "src": "photos/2026/08/dscf8725.jpg",
+              "thumb": "thumbs/2026/08/dscf8725.jpg",
+              "caption": "",
+              "w": 2000,
+              "h": 3000
+            },
+            {
+              "src": "photos/2026/08/dscf8753.jpg",
+              "thumb": "thumbs/2026/08/dscf8753.jpg",
+              "caption": "",
+              "w": 2000,
+              "h": 3000
+            },
+            {
+              "src": "photos/2026/08/dscf8763.jpg",
+              "thumb": "thumbs/2026/08/dscf8763.jpg",
+              "caption": "",
+              "w": 2000,
+              "h": 3000
+            },
+            {
+              "src": "photos/2026/08/dscf9326.jpg",
+              "thumb": "thumbs/2026/08/dscf9326.jpg",
+              "caption": "",
+              "w": 2000,
+              "h": 3000
+            }
+          ]
+        },
+        {
           "month": 7,
           "title": "",
           "photos": [
