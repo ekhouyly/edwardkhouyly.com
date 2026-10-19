@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Edward Khouyly · Photographs</title>
+  <meta name="description" content="A collection of Edward Khouyly's favourite photographs, year by year and month by month.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top">Edward Khouyly</a>
+    <nav class="years" id="year-nav" aria-label="Years"></nav>
+  </header>
+
+  <main id="top">
+    <section class="intro">
+      <h1>Photographs</h1>
+      <p>Favourite frames, kept year by year and month by month.</p>
+    </section>
+    <div id="gallery"></div>
+  </main>
+
+  <footer class="site-footer">© <span id="year"></span> Edward Khouyly</footer>
+
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lb-close" aria-label="Close">×</button>
+    <button class="lb-prev" aria-label="Previous photo">‹</button>
+    <figure>
+      <img alt="">
+      <figcaption></figcaption>
+    </figure>
+    <button class="lb-next" aria-label="Next photo">›</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

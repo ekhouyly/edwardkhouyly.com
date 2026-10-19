@@ -1,0 +1,481 @@
+{
+  "years": [
+    {
+      "year": 2026,
+      "months": [
+        {
+          "month": 10,
+          "title": "Autumn walks",
+          "photos": [
+            {
+              "src": "photos/2026/10/placeholder-1.jpg",
+              "caption": "First frost on the hill",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/10/placeholder-2.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/10/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/10/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/10/placeholder-5.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2026/10/placeholder-6.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            }
+          ]
+        },
+        {
+          "month": 8,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2026/08/placeholder-1.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/08/placeholder-2.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/08/placeholder-3.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/08/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2026/08/placeholder-5.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            }
+          ]
+        },
+        {
+          "month": 5,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2026/05/placeholder-1.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/05/placeholder-2.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2026/05/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            }
+          ]
+        },
+        {
+          "month": 2,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2026/02/placeholder-1.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/02/placeholder-2.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2026/02/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2026/02/placeholder-4.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2026/02/placeholder-5.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "months": [
+        {
+          "month": 12,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2025/12/placeholder-1.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/12/placeholder-2.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/12/placeholder-3.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/12/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2025/12/placeholder-5.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2025/12/placeholder-6.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1600
+            }
+          ]
+        },
+        {
+          "month": 9,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2025/09/placeholder-1.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/09/placeholder-2.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2025/09/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2025/09/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/09/placeholder-5.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2025/09/placeholder-6.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            }
+          ]
+        },
+        {
+          "month": 7,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2025/07/placeholder-1.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/07/placeholder-2.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2025/07/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2025/07/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            }
+          ]
+        },
+        {
+          "month": 4,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2025/04/placeholder-1.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/04/placeholder-2.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2025/04/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1600
+            }
+          ]
+        },
+        {
+          "month": 1,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2025/01/placeholder-1.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2025/01/placeholder-2.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/01/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2025/01/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1600
+            },
+            {
+              "src": "photos/2025/01/placeholder-5.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2025/01/placeholder-6.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "months": [
+        {
+          "month": 11,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2024/11/placeholder-1.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2024/11/placeholder-2.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2024/11/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1600
+            }
+          ]
+        },
+        {
+          "month": 8,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2024/08/placeholder-1.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2024/08/placeholder-2.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2024/08/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2024/08/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2024/08/placeholder-5.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2024/08/placeholder-6.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            }
+          ]
+        },
+        {
+          "month": 6,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2024/06/placeholder-1.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2024/06/placeholder-2.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2024/06/placeholder-3.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2024/06/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2024/06/placeholder-5.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            },
+            {
+              "src": "photos/2024/06/placeholder-6.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            }
+          ]
+        },
+        {
+          "month": 3,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2024/03/placeholder-1.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2024/03/placeholder-2.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2024/03/placeholder-3.jpg",
+              "caption": "",
+              "w": 1067,
+              "h": 1600
+            },
+            {
+              "src": "photos/2024/03/placeholder-4.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 900
+            },
+            {
+              "src": "photos/2024/03/placeholder-5.jpg",
+              "caption": "",
+              "w": 1600,
+              "h": 1067
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
