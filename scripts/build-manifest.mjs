@@ -62,6 +62,15 @@ const years = dirs(ROOT).sort((a, b) => b - a).map((year) => ({
   }).filter((m) => m.photos.length),
 })).filter((y) => y.months.length);
 
-writeFileSync(join(ROOT, "manifest.json"), JSON.stringify({ years }, null, 2) + "\n");
-const count = years.reduce((n, y) => n + y.months.reduce((k, m) => k + m.photos.length, 0), 0);
+// photos/more/ holds photos without a known date; they're shown after the dated years.
+const moreDir = join(ROOT, "more");
+const more = existsSync(moreDir) ? readdirSync(moreDir).filter((f) => IMAGE.test(f)).sort().map((f) => ({
+  src: `photos/more/${f}`,
+  thumb: existsSync(join(THUMBS, "more", f)) ? `thumbs/more/${f}` : `photos/more/${f}`,
+  caption: "",
+  ...dimensions(join(moreDir, f)),
+})) : [];
+
+writeFileSync(join(ROOT, "manifest.json"), JSON.stringify({ years, more }, null, 2) + "\n");
+const count = years.reduce((n, y) => n + y.months.reduce((k, m) => k + m.photos.length, 0), 0) + more.length;
 console.log(`manifest.json: ${count} photos across ${years.length} years`);

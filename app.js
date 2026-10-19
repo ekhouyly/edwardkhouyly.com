@@ -23,8 +23,8 @@ function el(tag, attrs = {}, children = []) {
   return node;
 }
 
-function render({ years }) {
-  if (!years.length) {
+function render({ years, more = [] }) {
+  if (!years.length && !more.length) {
     gallery.append(el("p", { className: "empty", textContent: "New photographs are on their way." }));
     return;
   }
@@ -37,19 +37,7 @@ function render({ years }) {
       const weeks = el("div", { className: "weeks" });
       for (const { week, photos: inWeek } of groupByWeek(photos)) {
         const grid = el("div", { className: "grid" });
-        for (const photo of inWeek) {
-          const where = week ? `Week ${week} · ${label}` : label;
-          const index = flat.push({ ...photo, label: where }) - 1;
-          const img = el("img", {
-            src: photo.thumb || photo.src, alt: photo.caption || where, loading: "lazy", decoding: "async",
-            width: photo.w, height: photo.h,
-          });
-          img.addEventListener("load", () => img.classList.add("loaded"));
-          if (img.complete) img.classList.add("loaded");
-          const btn = el("button", { type: "button", ariaLabel: `Open ${photo.caption || where}` }, [img]);
-          btn.addEventListener("click", () => open(index));
-          grid.append(btn);
-        }
+        for (const photo of inWeek) grid.append(tile(photo, week ? `Week ${week} · ${label}` : label));
         const block = el("div", { className: "week" });
         if (week) block.append(el("h4", {}, [`Week ${week}`, el("span", { textContent: weekRange(inWeek[0].date) })]));
         block.append(grid);
@@ -61,7 +49,27 @@ function render({ years }) {
     }
     gallery.append(section);
   }
+  if (more.length) {
+    yearNav.append(el("a", { href: "#more", textContent: "More" }));
+    const grid = el("div", { className: "grid" });
+    for (const photo of more) grid.append(tile(photo, "More photographs"));
+    gallery.append(el("section", { className: "year", id: "more" }, [el("h2", { textContent: "More" }), grid]));
+  }
   highlightYearOnScroll();
+}
+
+// One clickable thumbnail that opens the full photo in the viewer.
+function tile(photo, where) {
+  const index = flat.push({ ...photo, label: where }) - 1;
+  const img = el("img", {
+    src: photo.thumb || photo.src, alt: photo.caption || where, loading: "lazy", decoding: "async",
+    width: photo.w, height: photo.h,
+  });
+  img.addEventListener("load", () => img.classList.add("loaded"));
+  if (img.complete) img.classList.add("loaded");
+  const btn = el("button", { type: "button", ariaLabel: `Open ${photo.caption || where}` }, [img]);
+  btn.addEventListener("click", () => open(index));
+  return btn;
 }
 
 // Photos arrive newest first; consecutive photos in the same week share a block.
