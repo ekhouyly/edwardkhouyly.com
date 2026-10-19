@@ -1,3 +1,231 @@
 {
-  "years": []
+  "years": [
+    {
+      "year": 2026,
+      "months": [
+        {
+          "month": 7,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2026/07/2026-07-24_dscf7147.jpg",
+              "thumb": "thumbs/2026/07/2026-07-24_dscf7147.jpg",
+              "caption": "",
+              "date": "2026-07-24",
+              "week": 30,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/07/2026-07-24_dscf7145.jpg",
+              "thumb": "thumbs/2026/07/2026-07-24_dscf7145.jpg",
+              "caption": "",
+              "date": "2026-07-24",
+              "week": 30,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/07/2026-07-06_dscf6372.jpg",
+              "thumb": "thumbs/2026/07/2026-07-06_dscf6372.jpg",
+              "caption": "",
+              "date": "2026-07-06",
+              "week": 28,
+              "w": 1717,
+              "h": 2576
+            }
+          ]
+        },
+        {
+          "month": 6,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2026/06/2026-06-28_dscf6257.jpg",
+              "thumb": "thumbs/2026/06/2026-06-28_dscf6257.jpg",
+              "caption": "",
+              "date": "2026-06-28",
+              "week": 26,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/06/2026-06-27_dscf6252.jpg",
+              "thumb": "thumbs/2026/06/2026-06-27_dscf6252.jpg",
+              "caption": "",
+              "date": "2026-06-27",
+              "week": 26,
+              "w": 2576,
+              "h": 1717
+            },
+            {
+              "src": "photos/2026/06/2026-06-26_dscf6241.jpg",
+              "thumb": "thumbs/2026/06/2026-06-26_dscf6241.jpg",
+              "caption": "",
+              "date": "2026-06-26",
+              "week": 26,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/06/2026-06-23_dscf6201.jpg",
+              "thumb": "thumbs/2026/06/2026-06-23_dscf6201.jpg",
+              "caption": "",
+              "date": "2026-06-23",
+              "week": 26,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/06/2026-06-23_dscf6187.jpg",
+              "thumb": "thumbs/2026/06/2026-06-23_dscf6187.jpg",
+              "caption": "",
+              "date": "2026-06-23",
+              "week": 26,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/06/2026-06-23_dscf6185.jpg",
+              "thumb": "thumbs/2026/06/2026-06-23_dscf6185.jpg",
+              "caption": "",
+              "date": "2026-06-23",
+              "week": 26,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/06/2026-06-21_dscf6038.jpg",
+              "thumb": "thumbs/2026/06/2026-06-21_dscf6038.jpg",
+              "caption": "",
+              "date": "2026-06-21",
+              "week": 25,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/06/2026-06-17_dscf5978.jpg",
+              "thumb": "thumbs/2026/06/2026-06-17_dscf5978.jpg",
+              "caption": "",
+              "date": "2026-06-17",
+              "week": 25,
+              "w": 2576,
+              "h": 1717
+            },
+            {
+              "src": "photos/2026/06/2026-06-16_dscf5974.jpg",
+              "thumb": "thumbs/2026/06/2026-06-16_dscf5974.jpg",
+              "caption": "",
+              "date": "2026-06-16",
+              "week": 25,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/06/2026-06-15_dscf5958.jpg",
+              "thumb": "thumbs/2026/06/2026-06-15_dscf5958.jpg",
+              "caption": "",
+              "date": "2026-06-15",
+              "week": 25,
+              "w": 2576,
+              "h": 1717
+            },
+            {
+              "src": "photos/2026/06/2026-06-15_dscf5954.jpg",
+              "thumb": "thumbs/2026/06/2026-06-15_dscf5954.jpg",
+              "caption": "",
+              "date": "2026-06-15",
+              "week": 25,
+              "w": 1717,
+              "h": 2576
+            }
+          ]
+        },
+        {
+          "month": 5,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2026/05/2026-05-17_dscf5012.jpg",
+              "thumb": "thumbs/2026/05/2026-05-17_dscf5012.jpg",
+              "caption": "",
+              "date": "2026-05-17",
+              "week": 20,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/05/2026-05-17_dscf5011.jpg",
+              "thumb": "thumbs/2026/05/2026-05-17_dscf5011.jpg",
+              "caption": "",
+              "date": "2026-05-17",
+              "week": 20,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/05/2026-05-15_dscf4917.jpg",
+              "thumb": "thumbs/2026/05/2026-05-15_dscf4917.jpg",
+              "caption": "",
+              "date": "2026-05-15",
+              "week": 20,
+              "w": 2576,
+              "h": 1717
+            },
+            {
+              "src": "photos/2026/05/2026-05-15_dscf4851.jpg",
+              "thumb": "thumbs/2026/05/2026-05-15_dscf4851.jpg",
+              "caption": "",
+              "date": "2026-05-15",
+              "week": 20,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/05/2026-05-15_dscf4842.jpg",
+              "thumb": "thumbs/2026/05/2026-05-15_dscf4842.jpg",
+              "caption": "",
+              "date": "2026-05-15",
+              "week": 20,
+              "w": 2576,
+              "h": 1717
+            },
+            {
+              "src": "photos/2026/05/2026-05-15_dscf4841.jpg",
+              "thumb": "thumbs/2026/05/2026-05-15_dscf4841.jpg",
+              "caption": "",
+              "date": "2026-05-15",
+              "week": 20,
+              "w": 1717,
+              "h": 2576
+            },
+            {
+              "src": "photos/2026/05/2026-05-15_dscf4819.jpg",
+              "thumb": "thumbs/2026/05/2026-05-15_dscf4819.jpg",
+              "caption": "",
+              "date": "2026-05-15",
+              "week": 20,
+              "w": 1717,
+              "h": 2576
+            }
+          ]
+        },
+        {
+          "month": 4,
+          "title": "",
+          "photos": [
+            {
+              "src": "photos/2026/04/2026-04-09_dscf4261.jpg",
+              "thumb": "thumbs/2026/04/2026-04-09_dscf4261.jpg",
+              "caption": "",
+              "date": "2026-04-09",
+              "week": 15,
+              "w": 2576,
+              "h": 1717
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
