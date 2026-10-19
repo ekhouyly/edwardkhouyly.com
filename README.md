@@ -11,7 +11,7 @@ A static photo gallery: favourite photos grouped by year and month, with a full-
    ```
 3. Run `node scripts/build-manifest.mjs` to refresh `photos/manifest.json`.
 
-Resize photos to about 2000px on the long edge before adding them so the site stays fast.
+Resize photos to about 3000px on the long edge, and put a ~1000px copy at the same path under `thumbs/` for the grid, so the site stays fast.
 
 ## Previewing locally
 

@@ -33,7 +33,7 @@ function render({ years }) {
       for (const photo of photos) {
         const index = flat.push({ ...photo, label }) - 1;
         const img = el("img", {
-          src: photo.src, alt: photo.caption || label, loading: "lazy", decoding: "async",
+          src: photo.thumb || photo.src, alt: photo.caption || label, loading: "lazy", decoding: "async",
           width: photo.w, height: photo.h,
         });
         img.addEventListener("load", () => img.classList.add("loaded"));

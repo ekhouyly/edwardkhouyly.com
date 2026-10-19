@@ -6,6 +6,7 @@ import { readdirSync, readFileSync, writeFileSync, existsSync, statSync } from "
 import { join } from "node:path";
 
 const ROOT = new URL("../photos/", import.meta.url).pathname;
+const THUMBS = new URL("../thumbs/", import.meta.url).pathname;
 const IMAGE = /\.(jpe?g|png|webp|avif|gif)$/i;
 
 // Reads width/height from the file header so the gallery can reserve space before images load.
@@ -36,6 +37,8 @@ const years = dirs(ROOT).sort((a, b) => b - a).map((year) => ({
     const meta = existsSync(join(dir, "captions.json")) ? JSON.parse(readFileSync(join(dir, "captions.json"), "utf8")) : {};
     const photos = readdirSync(dir).filter((f) => IMAGE.test(f)).sort().map((f) => ({
       src: `photos/${year}/${month}/${f}`,
+      // smaller copy for the grid, if one exists under thumbs/YYYY/MM/
+      thumb: existsSync(join(THUMBS, year, month, f)) ? `thumbs/${year}/${month}/${f}` : `photos/${year}/${month}/${f}`,
       caption: meta.photos?.[f] ?? "",
       ...dimensions(join(dir, f)),
     }));
