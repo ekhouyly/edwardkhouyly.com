@@ -320,13 +320,23 @@ function openTrip(trip) {
     sections.push(el("section", { className: "place" }, [el("h3", { textContent: "More from the trip" }), grid]));
   }
   const map = el("div", { className: "trip-map", id: "trip-map" });
+  // The route, in the order the places were visited; each stop jumps back up to its photos.
+  const stops = el("ol", { className: "trip-stops" }, trip.places.map((pl, i) =>
+    el("li", {}, [el("button", { type: "button", onclick: () => goToPlace(i) }, [
+      el("span", { className: "stop-num", textContent: i + 1 }),
+      el("span", { className: "stop-name", textContent: pl.name }),
+      el("span", { className: "stop-meta", textContent: `${dateSpan(pl.photos)} · ${pl.photos.length} photo${pl.photos.length === 1 ? "" : "s"}` }),
+    ])])));
   tripBody.replaceChildren(
     el("div", { className: "trip-title" }, [
       el("h1", {}, [flag(trip), trip.name]),
       el("p", { textContent: `${trip.when} · ${trip.all.length} photos · ${trip.places.length} ${trip.places.length === 1 ? "place" : "places"}` }),
     ]),
-    map,
     ...sections,
+    el("section", { className: "trip-map-section" }, [
+      el("div", { className: "trip-map-head" }, [el("p", { className: "eyebrow", textContent: "The route" }), el("h2", { textContent: "Where these were taken" })]),
+      el("div", { className: "trip-map-wrap" }, [map, stops]),
+    ]),
   );
   document.getElementById("trip-bar-name").textContent = trip.name;
   tripPage.hidden = false;
@@ -360,33 +370,40 @@ function loadLeaflet() {
   return leaflet;
 }
 
+function goToPlace(i) {
+  const target = document.getElementById(`place-${i}`);
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  target.classList.add("flash");
+  setTimeout(() => target.classList.remove("flash"), 1400);
+}
+
 async function drawMap(node, trip) {
   let L;
-  try { L = await loadLeaflet(); } catch { node.remove(); return; }
+  try { L = await loadLeaflet(); } catch { node.closest(".trip-map-section").remove(); return; }
   if (!node.isConnected) return;
-  const map = L.map(node, { scrollWheelZoom: false, zoomControl: true, attributionControl: true });
+  const map = L.map(node, { scrollWheelZoom: false, zoomControl: false, attributionControl: true });
+  L.control.zoom({ position: "bottomright" }).addTo(map);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 19,
   }).addTo(map);
-  const points = trip.places.map((pl, i) => {
+  const points = trip.places.map((pl) => [pl.lat, pl.lng]);
+  if (points.length > 1) {
+    const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
+    L.polyline(points, { color: accent, weight: 2.5, opacity: 0.9, dashArray: "2 8", lineCap: "round", interactive: false }).addTo(map);
+  }
+  trip.places.forEach((pl, i) => {
     const cover = pl.photos[0];
     const icon = L.divIcon({
       className: "",
-      html: `<div class="pin" style="background-image:url('${cover.small || cover.thumb}')"><span>${pl.photos.length}</span></div>`,
-      iconSize: [52, 52], iconAnchor: [26, 26],
+      html: `<div class="pin" style="background-image:url('${cover.small || cover.thumb}')"><span>${i + 1}</span></div>`,
+      iconSize: [56, 56], iconAnchor: [28, 28],
     });
-    L.marker([pl.lat, pl.lng], { icon, title: pl.name, keyboard: true })
-      .bindTooltip(pl.name, { className: "pin-label", direction: "top", offset: [0, -30] })
-      .on("click", () => {
-        const target = document.getElementById(`place-${i}`);
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-        target.classList.add("flash");
-        setTimeout(() => target.classList.remove("flash"), 1400);
-      })
+    L.marker(points[i], { icon, title: pl.name, keyboard: true })
+      .bindTooltip(`<strong>${pl.name}</strong> · ${pl.photos.length} photo${pl.photos.length === 1 ? "" : "s"}`, { className: "pin-label", direction: "top", offset: [0, -32] })
+      .on("click", () => goToPlace(i))
       .addTo(map);
-    return [pl.lat, pl.lng];
   });
-  if (points.length === 1) map.setView(points[0], 13);
-  else map.fitBounds(points, { padding: [60, 60], maxZoom: 13 });
+  if (points.length === 1) map.setView(points[0], 12);
+  else map.fitBounds(points, { padding: [70, 70], maxZoom: 12 });
 }
