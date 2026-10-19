@@ -2217,6 +2217,7 @@
     {
       "id": "korea",
       "name": "Korea",
+      "cover": "img_2916",
       "places": [
         {
           "name": "Seoul",
@@ -2308,7 +2309,7 @@
     },
     {
       "id": "cabo",
-      "name": "Cabo San Lucas",
+      "name": "Cabo San Lucas, Mexico",
       "places": [
         {
           "name": "Cabo San Lucas",
