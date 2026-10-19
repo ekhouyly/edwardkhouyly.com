@@ -43,9 +43,10 @@ function render({ years, more = [] }) {
         block.append(grid);
         weeks.append(block);
       }
-      const heading = el("h3", { textContent: MONTHS[month - 1] });
-      if (title) heading.append(el("span", { textContent: title }));
-      section.append(el("div", { className: "month", id: `y${year}-${String(month).padStart(2, "0")}` }, [heading, weeks]));
+      const head = el("div", { className: "month-head" }, [el("h3", { textContent: MONTHS[month - 1] })]);
+      if (title) head.append(el("p", { className: "month-title", textContent: title }));
+      head.append(el("p", { className: "month-count", textContent: `${photos.length} photo${photos.length === 1 ? "" : "s"}` }));
+      section.append(el("div", { className: "month", id: `y${year}-${String(month).padStart(2, "0")}` }, [head, weeks]));
     }
     gallery.append(section);
   }
@@ -56,7 +57,43 @@ function render({ years, more = [] }) {
     gallery.append(el("section", { className: "year", id: "more" }, [el("h2", { textContent: "More" }), grid]));
   }
   highlightYearOnScroll();
+  revealOnScroll();
+  startHero(years);
 }
+
+// Wide photos cross-fade behind the name at the top of the page.
+function startHero(years) {
+  const all = years.flatMap((y) => y.months.flatMap((m) => m.photos));
+  document.getElementById("hero-sub").textContent =
+    `${all.length} favourite frames, ${years.at(-1).year} to ${years[0].year}.`;
+  const wide = all.filter((p) => p.w > p.h * 1.3).sort(() => Math.random() - 0.5).slice(0, 8);
+  if (!wide.length) return;
+  const holder = document.getElementById("hero-slides");
+  const slides = wide.map(() => el("img", { alt: "", decoding: "async" }));
+  holder.append(...slides);
+  let i = 0;
+  const on = (n) => {
+    const img = slides[n];
+    if (!img.getAttribute("src")) img.src = wide[n].src;
+    const go = () => { slides.forEach((s) => s.classList.remove("on")); img.classList.add("on"); };
+    img.complete ? requestAnimationFrame(go) : img.addEventListener("load", go, { once: true });
+  };
+  on(0);
+  if (slides.length > 1 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    setInterval(() => { i = (i + 1) % slides.length; on(i); }, 6500);
+  }
+}
+
+function revealOnScroll() {
+  const observer = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add("in"); observer.unobserve(e.target); }
+  }, { rootMargin: "0px 0px -6% 0px" });
+  document.querySelectorAll(".grid button").forEach((b) => observer.observe(b));
+}
+
+const header = document.getElementById("site-header");
+const hero = document.querySelector(".hero");
+new IntersectionObserver(([e]) => header.classList.toggle("solid", !e.isIntersecting), { rootMargin: "-64px 0px 0px 0px" }).observe(hero);
 
 // One clickable thumbnail that opens the full photo in the viewer.
 function tile(photo, where) {
@@ -108,7 +145,11 @@ function highlightYearOnScroll() {
 function show(i) {
   current = (i + flat.length) % flat.length;
   const p = flat[current];
-  lbImg.src = p.src;
+  lbImg.classList.add("swap");
+  const next = new Image();
+  next.onload = () => { lbImg.src = p.src; lbImg.classList.remove("swap"); };
+  next.src = p.src;
+  document.getElementById("lb-count").textContent = `${current + 1} / ${flat.length}`;
   lbImg.alt = p.caption || p.label;
   lbCaption.textContent = p.caption ? `${p.caption} · ${p.label}` : p.label;
   // warm the cache for the neighbours
