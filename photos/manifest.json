@@ -1720,17 +1720,17 @@
           "title": "",
           "photos": [
             {
-              "src": "photos/2025/07/2025-07-21_dscf6953.jpg",
-              "thumb": "thumbs/2025/07/2025-07-21_dscf6953.jpg",
-              "small": "small/2025/07/2025-07-21_dscf6953.jpg",
-              "large": "large/2025/07/2025-07-21_dscf6953.jpg",
+              "src": "photos/2025/07/2025-07-09_dscf8009.jpg",
+              "thumb": "thumbs/2025/07/2025-07-09_dscf8009.jpg",
+              "small": "small/2025/07/2025-07-09_dscf8009.jpg",
+              "large": "large/2025/07/2025-07-09_dscf8009.jpg",
               "bg": [
-                "#73908b",
-                "#6e867c"
+                "#5389a7",
+                "#a0947f"
               ],
               "caption": "",
-              "date": "2025-07-21",
-              "week": 30,
+              "date": "2025-07-09",
+              "week": 28,
               "w": 1717,
               "h": 2576
             },
@@ -1799,6 +1799,10 @@
               "thumb": "thumbs/2025/07/2025-07-07_dscf7296.jpg",
               "small": "small/2025/07/2025-07-07_dscf7296.jpg",
               "large": "large/2025/07/2025-07-07_dscf7296.jpg",
+              "bg": [
+                "#a9bdc5",
+                "#7e7568"
+              ],
               "caption": "",
               "date": "2025-07-07",
               "week": 28,
@@ -1828,21 +1832,6 @@
               "bg": [
                 "#a7acb1",
                 "#746451"
-              ],
-              "caption": "",
-              "date": "2025-07-06",
-              "week": 27,
-              "w": 1717,
-              "h": 2576
-            },
-            {
-              "src": "photos/2025/07/2025-07-06_dscf8009.jpg",
-              "thumb": "thumbs/2025/07/2025-07-06_dscf8009.jpg",
-              "small": "small/2025/07/2025-07-06_dscf8009.jpg",
-              "large": "large/2025/07/2025-07-06_dscf8009.jpg",
-              "bg": [
-                "#5389a7",
-                "#a0947f"
               ],
               "caption": "",
               "date": "2025-07-06",
@@ -1881,10 +1870,29 @@
               "h": 2576
             },
             {
+              "src": "photos/2025/07/2025-07-05_dscf6953.jpg",
+              "thumb": "thumbs/2025/07/2025-07-05_dscf6953.jpg",
+              "small": "small/2025/07/2025-07-05_dscf6953.jpg",
+              "large": "large/2025/07/2025-07-05_dscf6953.jpg",
+              "bg": [
+                "#73908b",
+                "#6e867c"
+              ],
+              "caption": "",
+              "date": "2025-07-05",
+              "week": 27,
+              "w": 1717,
+              "h": 2576
+            },
+            {
               "src": "photos/2025/07/2025-07-05_dscf6738.jpg",
               "thumb": "thumbs/2025/07/2025-07-05_dscf6738.jpg",
               "small": "small/2025/07/2025-07-05_dscf6738.jpg",
               "large": "large/2025/07/2025-07-05_dscf6738.jpg",
+              "bg": [
+                "#879095",
+                "#7e7674"
+              ],
               "caption": "",
               "date": "2025-07-05",
               "week": 27,
@@ -1911,6 +1919,10 @@
               "thumb": "thumbs/2025/07/2025-07-04_dscf6083.jpg",
               "small": "small/2025/07/2025-07-04_dscf6083.jpg",
               "large": "large/2025/07/2025-07-04_dscf6083.jpg",
+              "bg": [
+                "#9f8c75",
+                "#9b8872"
+              ],
               "caption": "",
               "date": "2025-07-04",
               "week": 27,
@@ -2250,7 +2262,8 @@
     },
     {
       "id": "maritimes",
-      "name": "Nova Scotia, New Brunswick & PEI",
+      "name": "Maritimes",
+      "cover": "img_0300",
       "places": [
         {
           "name": "Halifax",
@@ -2310,7 +2323,8 @@
             "img_9441",
             "dscf6083",
             "dscf6738",
-            "dscf7296"
+            "dscf7296",
+            "dscf6953"
           ]
         }
       ]

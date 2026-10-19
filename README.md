@@ -33,3 +33,5 @@ Works as-is on GitHub Pages, Netlify or Vercel. Once the domain is set up, add i
 ## Link preview
 
 `og.jpg` is the image shown when the link is shared. A GitHub Action (`.github/workflows/link-preview.yml`) runs `scripts/og.py` every morning to pick a new random wide photo; run it by hand from the Actions tab, or locally with `python3 scripts/og.py`.
+
+A trip's card uses its first portrait photo unless the trip sets `"cover": "<photo name>"`.

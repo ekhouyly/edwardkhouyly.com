@@ -260,7 +260,7 @@ function renderTrips(trips, years) {
     if (!all.length) continue;
     const t = { ...trip, places, others, all, when: dateSpan(all) };
     tripsById.set(trip.id, t);
-    const cover = all.find((p) => p.h > p.w) || all[0];
+    const cover = (trip.cover && byId.get(trip.cover)) || all.find((p) => p.h > p.w) || all[0];
     cards.append(el("a", { className: "trip-card", href: `#trip/${trip.id}` }, [
       el("img", { src: cover.small || cover.thumb, alt: "", loading: "lazy", decoding: "async" }),
       el("div", { className: "trip-card-text" }, [
