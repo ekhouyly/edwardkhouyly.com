@@ -299,3 +299,15 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 }
 .flag { height: .7em; width: auto; aspect-ratio: 4 / 3; margin-right: .35em; border-radius: 2px; vertical-align: .02em; box-shadow: 0 0 0 1px rgba(0,0,0,.12); }
 .trip-body h1 .flag { height: .5em; vertical-align: .12em; }
+
+/* Each trip page takes its accents from its country's flag: --accent for pins, numbers and labels, --route for the line between stops. */
+.trip-page { --route: var(--accent); }
+.trip-page[data-country="jp"] { --accent: #bc002d; --route: #bc002d; }
+.trip-page[data-country="kr"] { --accent: #0047a0; --route: #cd2e3a; }
+.trip-page[data-country="ca"] { --accent: #d80621; --route: #d80621; }
+.trip-page[data-country="mx"] { --accent: #006847; --route: #ce1126; }
+:root[data-theme="dark"] .trip-page[data-country="jp"] { --accent: #e8414f; --route: #e8414f; }
+:root[data-theme="dark"] .trip-page[data-country="kr"] { --accent: #4d8ce0; --route: #ea5260; }
+:root[data-theme="dark"] .trip-page[data-country="ca"] { --accent: #f0424f; --route: #f0424f; }
+:root[data-theme="dark"] .trip-page[data-country="mx"] { --accent: #2fa877; --route: #e8414f; }
+.trip-title::after { content: ""; display: block; width: 72px; height: 4px; margin-top: 22px; border-radius: 2px; background: linear-gradient(90deg, var(--accent) 50%, var(--route) 50%); }

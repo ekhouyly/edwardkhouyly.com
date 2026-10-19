@@ -338,6 +338,7 @@ function openTrip(trip) {
       el("div", { className: "trip-map-wrap" }, [map, stops]),
     ]),
   );
+  tripPage.dataset.country = trip.country || "";
   document.getElementById("trip-bar-name").textContent = trip.name;
   tripPage.hidden = false;
   tripPage.scrollTop = 0;
@@ -389,7 +390,7 @@ async function drawMap(node, trip) {
   }).addTo(map);
   const points = trip.places.map((pl) => [pl.lat, pl.lng]);
   if (points.length > 1) {
-    const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
+    const accent = getComputedStyle(node).getPropertyValue("--route").trim();
     L.polyline(points, { color: accent, weight: 2.5, opacity: 0.9, dashArray: "2 8", lineCap: "round", interactive: false }).addTo(map);
   }
   trip.places.forEach((pl, i) => {
