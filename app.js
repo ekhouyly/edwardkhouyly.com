@@ -90,7 +90,10 @@ function startHero(years) {
   const all = years.flatMap((y) => y.months.flatMap((m) => m.photos));
   document.getElementById("hero-sub").textContent =
     `${all.length} favourite frames, ${years.at(-1).year} to ${years[0].year}.`;
-  const wide = all.filter((p) => p.w > p.h * 1.3).sort(() => Math.random() - 0.5).slice(0, 8);
+  // Upright phones get portrait photos, which fill a tall screen; everything else gets wide ones.
+  const tall = matchMedia("(orientation: portrait) and (max-width: 760px)").matches;
+  const fits = (p) => (tall ? p.h > p.w * 1.2 : p.w > p.h * 1.3);
+  const wide = all.filter(fits).sort(() => Math.random() - 0.5).slice(0, 8);
   if (!wide.length) return;
   const holder = document.getElementById("hero-slides");
   // first slide is the page's main image, so fetch it before the grid thumbnails
