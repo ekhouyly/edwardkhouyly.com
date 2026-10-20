@@ -55,14 +55,15 @@ function render({ years, more = [], trips = [] }) {
       el("div", { className: "year-head" }, [el("h2", { textContent: year }), el("p", { className: "year-meta", textContent: meta })]),
     ]);
 
-    for (const { month, title, photos } of months) {
+    for (const { month, title, weeks: weekTitles = {}, photos } of months) {
       const label = `${MONTHS[month - 1]} ${year}`;
       const weeks = el("div", { className: "weeks" });
       for (const { week, photos: inWeek } of groupByWeek(photos)) {
         const grid = el("div", { className: "grid" });
         for (const photo of inWeek) grid.append(tile(photo, week ? `Week ${week} · ${label}` : label));
         const block = el("div", { className: "week" });
-        if (week) block.append(el("h4", {}, [`Week ${week}`, el("span", { textContent: weekRange(inWeek[0].date) })]));
+        const weekTitle = week && weekTitles[week];
+        if (week) block.append(el("h4", {}, [`Week ${week}`, ...(weekTitle ? [el("em", { textContent: weekTitle })] : []), el("span", { textContent: weekRange(inWeek[0].date) })]));
         block.append(grid);
         weeks.append(block);
       }

@@ -1,7 +1,7 @@
 // Scans photos/YYYY/MM/ and writes photos/manifest.json, which the site reads.
 // Run after adding or removing photos:  node scripts/build-manifest.mjs
 // Optional per-month captions: photos/YYYY/MM/captions.json
-//   { "title": "Summer in Lisbon", "photos": { "IMG_0412.jpg": "Alfama at dusk" } }
+//   { "title": "Summer in Lisbon", "weeks": { "35": "A wedding" }, "photos": { "IMG_0412.jpg": "Alfama at dusk" } }
 // Optional trips with map pins: photos/trips.json (photos are named by the part after the date, e.g. "img_0136").
 // Smaller copies (small/, large/) and placeholder colours come from: python3 scripts/derive.py
 import { readdirSync, readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
@@ -67,7 +67,7 @@ const years = dirs(ROOT).sort((a, b) => b - a).map((year) => ({
       ...dateOf(f),
       ...dimensions(join(dir, f)),
     }));
-    return { month: Number(month), title: meta.title ?? "", photos };
+    return { month: Number(month), title: meta.title ?? "", weeks: meta.weeks ?? {}, photos };
   }).filter((m) => m.photos.length),
 })).filter((y) => y.months.length);
 

@@ -6,6 +6,7 @@
         {
           "month": 10,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2026/10/2026-10-06_img_3187.jpg",
@@ -72,6 +73,7 @@
         {
           "month": 9,
           "title": "Korea",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2026/09/2026-09-04_dscf0261.jpg",
@@ -123,6 +125,7 @@
         {
           "month": 8,
           "title": "Korea",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2026/08/2026-08-31_img_0162.jpg",
@@ -384,6 +387,7 @@
         {
           "month": 7,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2026/07/2026-07-24_dscf7147.jpg",
@@ -450,6 +454,7 @@
         {
           "month": 6,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2026/06/2026-06-28_dscf6257.jpg",
@@ -666,6 +671,7 @@
         {
           "month": 5,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2026/05/2026-05-17_dscf5012.jpg",
@@ -777,6 +783,7 @@
         {
           "month": 4,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2026/04/2026-04-16_dscf4296.jpg",
@@ -828,6 +835,7 @@
         {
           "month": 3,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2026/03/2026-03-28_dscf4175.jpg",
@@ -869,6 +877,7 @@
         {
           "month": 12,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2025/12/2025-12-28_img_0696.jpg",
@@ -920,6 +929,7 @@
         {
           "month": 10,
           "title": "Nova Scotia, New Brunswick & PEI",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2025/10/2025-10-31_dscf3113.jpg",
@@ -1226,6 +1236,7 @@
         {
           "month": 9,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2025/09/2025-09-27_dscf0959.jpg",
@@ -1307,6 +1318,9 @@
         {
           "month": 8,
           "title": "",
+          "weeks": {
+            "35": "Tabi & Josh's Wedding"
+          },
           "photos": [
             {
               "src": "photos/2025/08/2025-08-30_img_9876.jpg",
@@ -1688,6 +1702,7 @@
         {
           "month": 7,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2025/07/2025-07-09_dscf8009.jpg",
@@ -1904,6 +1919,7 @@
         {
           "month": 6,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2025/06/2025-06-26_img_8991.jpg",
@@ -2035,6 +2051,7 @@
         {
           "month": 7,
           "title": "Japan",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2024/07/2024-07-24_img_7353.jpg",
@@ -2131,6 +2148,7 @@
         {
           "month": 6,
           "title": "",
+          "weeks": {},
           "photos": [
             {
               "src": "photos/2024/06/2024-06-15_dscf2910.jpg",
