@@ -2225,6 +2225,8 @@
       "places": [
         {
           "name": "Seoul",
+          "local": "서울",
+          "lang": "ko",
           "lat": 37.5665,
           "lng": 126.978,
           "photos": [
@@ -2235,6 +2237,8 @@
         },
         {
           "name": "Busan",
+          "local": "부산",
+          "lang": "ko",
           "lat": 35.1796,
           "lng": 129.0756,
           "photos": [
@@ -2252,6 +2256,8 @@
         },
         {
           "name": "Jeju",
+          "local": "제주",
+          "lang": "ko",
           "lat": 33.458,
           "lng": 126.9425,
           "photos": [
@@ -2288,6 +2294,8 @@
         },
         {
           "name": "New Brunswick",
+          "local": "Nouveau-Brunswick",
+          "lang": "fr",
           "lat": 45.8177,
           "lng": -64.5767,
           "photos": [
@@ -2299,6 +2307,8 @@
         },
         {
           "name": "Prince Edward Island",
+          "local": "Île-du-Prince-Édouard",
+          "lang": "fr",
           "lat": 46.44,
           "lng": -63.38,
           "photos": [
@@ -2348,6 +2358,8 @@
       "places": [
         {
           "name": "Tokyo",
+          "local": "東京",
+          "lang": "ja",
           "lat": 35.6762,
           "lng": 139.6503,
           "photos": [
@@ -2356,6 +2368,8 @@
         },
         {
           "name": "Hakone",
+          "local": "箱根",
+          "lang": "ja",
           "lat": 35.2324,
           "lng": 139.1069,
           "photos": [
@@ -2364,6 +2378,8 @@
         },
         {
           "name": "Kyoto",
+          "local": "京都",
+          "lang": "ja",
           "lat": 35.0116,
           "lng": 135.7681,
           "photos": [
@@ -2374,6 +2390,8 @@
         },
         {
           "name": "Hiroshima",
+          "local": "広島",
+          "lang": "ja",
           "lat": 34.3853,
           "lng": 132.4553,
           "photos": [

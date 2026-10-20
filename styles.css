@@ -150,8 +150,8 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .trip-map-head h2 { margin: 0; font-family: Fraunces, serif; font-weight: 300; font-size: clamp(34px, 5vw, 64px); line-height: 1; letter-spacing: -0.03em; }
 .trip-map-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 320px); gap: clamp(16px, 2.5vw, 32px); align-items: start; }
 .trip-map { height: clamp(340px, 62vh, 640px); border-radius: 18px; overflow: hidden; background: var(--tile); z-index: 0; box-shadow: 0 1px 0 var(--line), 0 18px 50px -24px rgba(0,0,0,.35); }
-.trip-map { --sea: #d6e9f4; --sea-2: #c3ddee; --land: #f7f2e8; --land-edge: #e0d5c2; --home: color-mix(in srgb, var(--accent) 14%, #fffaf1); --home-edge: color-mix(in srgb, var(--accent) 45%, #ffffff); }
-:root[data-theme="dark"] .trip-map { --sea: #0e1c28; --sea-2: #0a141d; --land: #1c1d20; --land-edge: #2c2f34; --home: color-mix(in srgb, var(--accent) 26%, #18181a); --home-edge: color-mix(in srgb, var(--accent) 60%, #18181a); }
+.trip-page { --sea: #d6e9f4; --sea-2: #c3ddee; --land: #f7f2e8; --land-edge: #e0d5c2; --home: color-mix(in srgb, var(--accent) 14%, #fffaf1); --home-edge: color-mix(in srgb, var(--accent) 45%, #ffffff); }
+:root[data-theme="dark"] .trip-page { --sea: #0e1c28; --sea-2: #0a141d; --land: #1c1d20; --land-edge: #2c2f34; --home: color-mix(in srgb, var(--accent) 26%, #18181a); --home-edge: color-mix(in srgb, var(--accent) 60%, #18181a); }
 .trip-map.leaflet-container { background: radial-gradient(120% 90% at 30% 20%, var(--sea), var(--sea-2)); font-family: 'Instrument Sans', sans-serif; }
 .trip-map path.land { fill: var(--land); stroke: var(--land-edge); }
 .trip-map path.land.home { fill: var(--home); stroke: var(--home-edge); }
@@ -178,7 +178,7 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .place.compact { flex: var(--w) 1 calc(var(--w) * var(--row)); max-width: calc(var(--w) * var(--row) * 1.7); }
 .places .grid { --row: inherit; }
 .place.compact .grid::after { display: none; } /* let a short row stretch to the city's full width */
-.place h3 { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 12px; margin: 0 0 14px; font-family: Fraunces, serif; font-weight: 400; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.015em; }
+.place h3 { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 12px; margin: 0; font-family: Fraunces, serif; font-weight: 400; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.015em; }
 .place h3 span { white-space: nowrap; font-family: 'Instrument Sans', sans-serif; font-size: 13px; color: var(--muted); letter-spacing: .04em; }
 .place.flash h3 { color: var(--accent); transition: color .3s; }
 
@@ -350,3 +350,21 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 :root[data-theme="dark"] .trip-page[data-country="mx"] { --pattern: url(vendor/patterns/mx-dark.svg); }
 :root[data-theme="dark"] .trip-page[data-country] .trip-title::before { opacity: .28; }
 .week h4 em { font-family: Fraunces, serif; font-style: italic; font-weight: 400; font-size: 17px; letter-spacing: 0; text-transform: none; color: var(--accent); }
+
+/* Cities on a trip page: a dotted route down the side with a stop at each city, its name in the local
+   language, and a small map marking where it is. Stops alternate between the flag's colours. */
+.place { position: relative; padding-left: 30px; --stop: var(--accent); }
+.place:nth-child(even) { --stop: var(--route); }
+.place::before { content: ""; position: absolute; left: 6px; top: 24px; bottom: 0; border-left: 2px dotted var(--stop); opacity: .7; }
+.place::after { content: ""; position: absolute; left: 0; top: 10px; width: 14px; height: 14px; border-radius: 50%; background: var(--stop); box-shadow: 0 0 0 4px var(--bg); }
+.place-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+.place h3 .place-local { font-family: Fraunces, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", "Apple SD Gothic Neo", serif; font-size: .6em; letter-spacing: .02em; color: var(--stop); white-space: normal; }
+.place-map { flex: none; width: 84px; height: 60px; border-radius: 10px; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, var(--sea), var(--sea-2)); box-shadow: inset 0 0 0 1px var(--line); }
+.place-map svg { display: block; width: 100%; height: 100%; }
+.place-map path.land { fill: var(--land); stroke: var(--land-edge); stroke-width: .6; }
+.place-map path.land.home { fill: var(--home); stroke: var(--home-edge); }
+.place-map circle.here { fill: var(--stop); stroke: #fff; stroke-width: 1.5; }
+.place-map circle.other { fill: var(--muted); opacity: .55; }
+@media (max-width: 760px) { .place { padding-left: 24px; } .place-map { width: 64px; height: 46px; } }
+.place { container-type: inline-size; }
+@container (max-width: 420px) { .place-map { width: 52px; height: 38px; border-radius: 7px; } } /* narrow cities get a smaller map */
