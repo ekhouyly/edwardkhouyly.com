@@ -321,3 +321,21 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 /* Two-colour flags alternate: every second stop uses the second colour. */
 .pin.alt span, .trip-stops li:nth-child(even) .stop-num { background: var(--route); }
 .trip-page[data-country] .trip-map-head .eyebrow { background: linear-gradient(90deg, var(--accent), var(--route)); -webkit-background-clip: text; background-clip: text; color: transparent; width: fit-content; }
+
+/* A pattern from the trip's country behind its title: seigaiha waves, a Korean window lattice, maple leaves, Talavera tiles. */
+.trip-title { position: relative; isolation: isolate; }
+.trip-page[data-country] .trip-title::before {
+  content: ""; position: absolute; z-index: -1; top: 0; bottom: -24px; left: calc(-1 * var(--pad)); right: calc(-1 * var(--pad));
+  background: var(--pattern) repeat; opacity: .26;
+  -webkit-mask-image: linear-gradient(90deg, transparent 8%, #000 70%), linear-gradient(transparent, #000 25%, #000 55%, transparent);
+  -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 8%, #000 70%), linear-gradient(transparent, #000 25%, #000 55%, transparent); mask-composite: intersect;
+}
+.trip-page[data-country="jp"] { --pattern: url(vendor/patterns/jp-light.svg); }
+.trip-page[data-country="kr"] { --pattern: url(vendor/patterns/kr-light.svg); }
+.trip-page[data-country="ca"] { --pattern: url(vendor/patterns/ca-light.svg); }
+.trip-page[data-country="mx"] { --pattern: url(vendor/patterns/mx-light.svg); }
+:root[data-theme="dark"] .trip-page[data-country="jp"] { --pattern: url(vendor/patterns/jp-dark.svg); }
+:root[data-theme="dark"] .trip-page[data-country="kr"] { --pattern: url(vendor/patterns/kr-dark.svg); }
+:root[data-theme="dark"] .trip-page[data-country="ca"] { --pattern: url(vendor/patterns/ca-dark.svg); }
+:root[data-theme="dark"] .trip-page[data-country="mx"] { --pattern: url(vendor/patterns/mx-dark.svg); }
+:root[data-theme="dark"] .trip-page[data-country] .trip-title::before { opacity: .28; }
