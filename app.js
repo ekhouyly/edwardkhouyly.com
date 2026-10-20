@@ -320,10 +320,8 @@ function openTrip(trip) {
     const count = `${pl.photos.length} photo${pl.photos.length === 1 ? "" : "s"}`;
     // Cities with only a few photos sit side by side, sized so their photos share a row height.
     const width = pl.photos.reduce((sum, p) => sum + p.w / p.h, 0);
-    const mini = el("div", { className: "place-map", ariaHidden: "true" });
     const name = el("h3", {}, [pl.name, ...(pl.local ? [el("span", { className: "place-local", lang: pl.lang || "", textContent: pl.local })] : []), el("span", { textContent: count })]);
-    const section = el("section", { className: width <= 4 ? "place compact" : "place", id: `place-${i}` }, [el("div", { className: "place-head" }, [name, mini]), grid]);
-    tripOutline(trip).then((outline) => outline && mini.append(miniMap(outline, trip, i)));
+    const section = el("section", { className: width <= 4 ? "place compact" : "place", id: `place-${i}` }, [el("div", { className: "place-head" }, [name]), grid]);
     section.style.setProperty("--w", width.toFixed(3));
     return section;
   });
@@ -357,6 +355,7 @@ function openTrip(trip) {
   tripPage.scrollTop = 0;
   document.body.style.overflow = "hidden";
   tripPage.querySelectorAll(".grid button").forEach((b) => b.classList.add("in"));
+  drawRoute();
   document.title = `${trip.name} · Edward Khouy-Ly`;
   drawMap(map, trip);
 }
@@ -368,7 +367,27 @@ function closeTrip() {
   document.title = "Edward Khouy-Ly · Photographs";
 }
 
-tripPage.addEventListener("scroll", () => tripPage.classList.toggle("scrolled", tripPage.scrollTop > 160), { passive: true });
+tripPage.addEventListener("scroll", () => {
+  tripPage.classList.toggle("scrolled", tripPage.scrollTop > 160);
+  drawRoute();
+}, { passive: true });
+addEventListener("resize", () => drawRoute(), { passive: true });
+
+// The route line beside each city draws itself downward as the page scrolls past it.
+let routeFrame = 0;
+function drawRoute() {
+  if (routeFrame || tripPage.hidden) return;
+  routeFrame = requestAnimationFrame(() => {
+    routeFrame = 0;
+    const line = innerHeight * 0.7; // the line reaches whatever is 70% of the way down the screen
+    for (const place of tripPage.querySelectorAll(".place")) {
+      const r = place.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (line - r.top) / r.height));
+      place.style.setProperty("--drawn", p.toFixed(3));
+      place.classList.toggle("reached", p > 0);
+    }
+  });
+}
 
 // Leaflet is only fetched the first time someone opens a trip.
 let leaflet;
@@ -389,38 +408,6 @@ const outlines = new Map();
 function tripOutline(trip) {
   if (!outlines.has(trip.id)) outlines.set(trip.id, fetch(`photos/maps/${trip.id}.json`).then((r) => r.json()).catch(() => null));
   return outlines.get(trip.id);
-}
-
-// A small map beside a city's name: the trip's area, with that city marked.
-function miniMap(outline, trip, current) {
-  const W = 84, H = 60, NS = "http://www.w3.org/2000/svg";
-  const lats = trip.places.map((p) => p.lat), lngs = trip.places.map((p) => p.lng);
-  const k = Math.cos((((Math.min(...lats) + Math.max(...lats)) / 2) * Math.PI) / 180); // squash longitude to keep shapes true
-  let [x0, x1, y0, y1] = [Math.min(...lngs) * k, Math.max(...lngs) * k, Math.min(...lats), Math.max(...lats)];
-  const pad = Math.max(x1 - x0, y1 - y0) * 0.35 + 0.6;
-  [x0, x1, y0, y1] = [x0 - pad, x1 + pad, y0 - pad, y1 + pad];
-  const s = Math.min(W / (x1 - x0), H / (y1 - y0));
-  const ox = (W - (x1 - x0) * s) / 2, oy = (H - (y1 - y0) * s) / 2;
-  const px = ([lng, lat]) => [ox + (lng * k - x0) * s, oy + (y1 - lat) * s];
-  const svg = document.createElementNS(NS, "svg");
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  for (const f of outline.features) {
-    let d = "";
-    for (const poly of f.geometry.coordinates) for (const ring of poly) {
-      d += ring.map((c, j) => `${j ? "L" : "M"}${px(c).map((v) => v.toFixed(1)).join(" ")}`).join("") + "Z";
-    }
-    const path = document.createElementNS(NS, "path");
-    path.setAttribute("d", d);
-    path.setAttribute("class", f.properties.home ? "land home" : "land");
-    svg.append(path);
-  }
-  trip.places.forEach((pl, j) => {
-    const [cx, cy] = px([pl.lng, pl.lat]);
-    const dot = document.createElementNS(NS, "circle");
-    Object.entries({ cx, cy, r: j === current ? 4.5 : 2, class: j === current ? "here" : "other" }).forEach(([a, v]) => dot.setAttribute(a, v));
-    svg.append(dot);
-  });
-  return svg;
 }
 
 function goToPlace(i) {

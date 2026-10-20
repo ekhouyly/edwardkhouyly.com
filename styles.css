@@ -355,16 +355,11 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
    language, and a small map marking where it is. Stops alternate between the flag's colours. */
 .place { position: relative; padding-left: 30px; --stop: var(--accent); }
 .place:nth-child(even) { --stop: var(--route); }
-.place::before { content: ""; position: absolute; left: 6px; top: 24px; bottom: 0; border-left: 2px dotted var(--stop); opacity: .7; }
-.place::after { content: ""; position: absolute; left: 0; top: 10px; width: 14px; height: 14px; border-radius: 50%; background: var(--stop); box-shadow: 0 0 0 4px var(--bg); }
+.place::before { content: ""; position: absolute; left: 6px; top: 24px; bottom: 0; border-left: 2px dotted var(--stop); opacity: .7;
+  clip-path: inset(0 0 calc((1 - var(--drawn, 1)) * 100%) 0); } /* app.js sets --drawn as the page scrolls */
+.place::after { content: ""; position: absolute; left: 0; top: 10px; width: 14px; height: 14px; border-radius: 50%; background: var(--stop); box-shadow: 0 0 0 4px var(--bg); transition: transform .35s cubic-bezier(.3,1.6,.5,1), opacity .35s; }
+.place:not(.reached)::after { transform: scale(.4); opacity: .35; }
+@media (prefers-reduced-motion: reduce) { .place::before { clip-path: none; } .place::after { transform: none !important; opacity: 1 !important; } }
 .place-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
 .place h3 .place-local { font-family: Fraunces, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", "Apple SD Gothic Neo", serif; font-size: .6em; letter-spacing: .02em; color: var(--stop); white-space: normal; }
-.place-map { flex: none; width: 84px; height: 60px; border-radius: 10px; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, var(--sea), var(--sea-2)); box-shadow: inset 0 0 0 1px var(--line); }
-.place-map svg { display: block; width: 100%; height: 100%; }
-.place-map path.land { fill: var(--land); stroke: var(--land-edge); stroke-width: .6; }
-.place-map path.land.home { fill: var(--home); stroke: var(--home-edge); }
-.place-map circle.here { fill: var(--stop); stroke: #fff; stroke-width: 1.5; }
-.place-map circle.other { fill: var(--muted); opacity: .55; }
-@media (max-width: 760px) { .place { padding-left: 24px; } .place-map { width: 64px; height: 46px; } }
-.place { container-type: inline-size; }
-@container (max-width: 420px) { .place-map { width: 52px; height: 38px; border-radius: 7px; } } /* narrow cities get a smaller map */
+@media (max-width: 760px) { .place { padding-left: 24px; } }
