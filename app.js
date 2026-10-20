@@ -355,7 +355,6 @@ function openTrip(trip) {
   tripPage.scrollTop = 0;
   document.body.style.overflow = "hidden";
   tripPage.querySelectorAll(".grid button").forEach((b) => b.classList.add("in"));
-  drawRoute();
   document.title = `${trip.name} · Edward Khouy-Ly`;
   drawMap(map, trip);
 }
@@ -367,33 +366,7 @@ function closeTrip() {
   document.title = "Edward Khouy-Ly · Photographs";
 }
 
-tripPage.addEventListener("scroll", () => {
-  tripPage.classList.toggle("scrolled", tripPage.scrollTop > 160);
-  drawRoute();
-}, { passive: true });
-addEventListener("resize", () => drawRoute(), { passive: true });
-
-// The route line down the left of the cities draws itself downward as the page scrolls past them.
-let routeFrame = 0;
-function drawRoute() {
-  if (routeFrame || tripPage.hidden) return;
-  routeFrame = requestAnimationFrame(() => {
-    routeFrame = 0;
-    const places = tripPage.querySelector(".places");
-    if (!places) return;
-    const line = innerHeight * 0.7; // the line reaches whatever is 70% of the way down the screen
-    const box = places.getBoundingClientRect();
-    places.style.setProperty("--drawn", Math.min(1, Math.max(0, (line - box.top) / box.height)).toFixed(3));
-    let rowTop = null;
-    for (const place of places.children) {
-      const top = place.getBoundingClientRect().top;
-      // A city that shares a row with the one before it isn't on the line itself.
-      place.classList.toggle("beside", rowTop !== null && Math.abs(top - rowTop) < 2);
-      if (!place.classList.contains("beside")) rowTop = top;
-      place.classList.toggle("reached", top + 17 < line);
-    }
-  });
-}
+tripPage.addEventListener("scroll", () => tripPage.classList.toggle("scrolled", tripPage.scrollTop > 160), { passive: true });
 
 // Leaflet is only fetched the first time someone opens a trip.
 let leaflet;
