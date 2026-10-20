@@ -12,16 +12,18 @@ let list = flat; // the photos the viewer is stepping through (all photos, or on
 let current = 0;
 
 // White or black background, remembered on this device.
-const toggle = document.getElementById("theme-toggle");
+// The header and each trip page have a toggle.
+const toggles = document.querySelectorAll(".theme-toggle");
 const themeColor = document.querySelector('meta[name="theme-color"]');
 function applyTheme(dark) {
   if (dark) document.documentElement.dataset.theme = "dark";
   else delete document.documentElement.dataset.theme;
-  toggle.ariaLabel = dark ? "Switch to white background" : "Switch to black background";
+  for (const t of toggles) t.ariaLabel = dark ? "Switch to white background" : "Switch to black background";
   themeColor.content = dark ? "#000000" : "#ffffff";
+  dispatchEvent(new Event("themechange"));
 }
 applyTheme(document.documentElement.dataset.theme === "dark");
-toggle.addEventListener("click", () => {
+for (const t of toggles) t.addEventListener("click", () => {
   const dark = document.documentElement.dataset.theme !== "dark";
   applyTheme(dark);
   try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
@@ -404,11 +406,18 @@ async function drawMap(node, trip) {
   }
   if (points.length > 1) {
     // Each leg takes the colour of the stop it leaves from, so two-colour flags alternate along the route.
-    const style = getComputedStyle(node);
-    const colors = [style.getPropertyValue("--accent").trim(), style.getPropertyValue("--route").trim()];
+    const colors = () => { const s = getComputedStyle(node); return [s.getPropertyValue("--accent").trim(), s.getPropertyValue("--route").trim()]; };
+    const legs = [];
     for (let i = 1; i < points.length; i++) {
-      L.polyline([points[i - 1], points[i]], { color: colors[(i - 1) % 2], weight: 2.5, opacity: 0.9, dashArray: "2 8", lineCap: "round", interactive: false }).addTo(map);
+      legs.push(L.polyline([points[i - 1], points[i]], { color: colors()[(i - 1) % 2], weight: 2.5, opacity: 0.9, dashArray: "2 8", lineCap: "round", interactive: false }).addTo(map));
     }
+    // The flag colours are a little brighter on black, so recolour the route when the theme changes.
+    const recolor = () => {
+      if (!node.isConnected) return removeEventListener("themechange", recolor);
+      const c = colors();
+      legs.forEach((leg, i) => leg.setStyle({ color: c[i % 2] }));
+    };
+    addEventListener("themechange", recolor);
   }
   trip.places.forEach((pl, i) => {
     const cover = pl.photos[0];
