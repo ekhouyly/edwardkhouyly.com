@@ -353,13 +353,18 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 
 /* Cities on a trip page: a dotted route down the side with a stop at each city, its name in the local
    language, and a small map marking where it is. Stops alternate between the flag's colours. */
-.place { position: relative; padding-left: 30px; --stop: var(--accent); }
+/* One route line runs down the left of all the cities; app.js sets --drawn as the page scrolls. */
+.places { position: relative; padding-left: 30px; }
+.places::before { content: ""; position: absolute; left: 6px; top: 24px; bottom: clamp(40px, 5vw, 64px); border-left: 2px dotted var(--accent); opacity: .7;
+  clip-path: inset(0 0 calc((1 - var(--drawn, 1)) * 100%) 0); }
+.place { position: relative; --stop: var(--accent); }
 .place:nth-child(even) { --stop: var(--route); }
-.place::before { content: ""; position: absolute; left: 6px; top: 24px; bottom: 0; border-left: 2px dotted var(--stop); opacity: .7;
-  clip-path: inset(0 0 calc((1 - var(--drawn, 1)) * 100%) 0); } /* app.js sets --drawn as the page scrolls */
-.place::after { content: ""; position: absolute; left: 0; top: 10px; width: 14px; height: 14px; border-radius: 50%; background: var(--stop); box-shadow: 0 0 0 4px var(--bg); transition: transform .35s cubic-bezier(.3,1.6,.5,1), opacity .35s; }
+/* A stop on the line for the first city in each row; a city beside it gets its dot by its name. */
+.place::after { content: ""; position: absolute; left: -30px; top: 10px; width: 14px; height: 14px; border-radius: 50%; background: var(--stop); box-shadow: 0 0 0 4px var(--bg); transition: transform .35s cubic-bezier(.3,1.6,.5,1), opacity .35s; }
+.place.beside .place-head { padding-left: 24px; }
+.place.beside::after { left: 0; }
 .place:not(.reached)::after { transform: scale(.4); opacity: .35; }
-@media (prefers-reduced-motion: reduce) { .place::before { clip-path: none; } .place::after { transform: none !important; opacity: 1 !important; } }
+@media (prefers-reduced-motion: reduce) { .places::before { clip-path: none; } .place::after { transform: none !important; opacity: 1 !important; } }
+@media (max-width: 760px) { .places { padding-left: 24px; } .place::after { left: -24px; } }
 .place-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
 .place h3 .place-local { font-family: Fraunces, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", "Apple SD Gothic Neo", serif; font-size: .6em; letter-spacing: .02em; color: var(--stop); white-space: normal; }
-@media (max-width: 760px) { .place { padding-left: 24px; } }

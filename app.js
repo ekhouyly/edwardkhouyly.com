@@ -373,18 +373,24 @@ tripPage.addEventListener("scroll", () => {
 }, { passive: true });
 addEventListener("resize", () => drawRoute(), { passive: true });
 
-// The route line beside each city draws itself downward as the page scrolls past it.
+// The route line down the left of the cities draws itself downward as the page scrolls past them.
 let routeFrame = 0;
 function drawRoute() {
   if (routeFrame || tripPage.hidden) return;
   routeFrame = requestAnimationFrame(() => {
     routeFrame = 0;
+    const places = tripPage.querySelector(".places");
+    if (!places) return;
     const line = innerHeight * 0.7; // the line reaches whatever is 70% of the way down the screen
-    for (const place of tripPage.querySelectorAll(".place")) {
-      const r = place.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (line - r.top) / r.height));
-      place.style.setProperty("--drawn", p.toFixed(3));
-      place.classList.toggle("reached", p > 0);
+    const box = places.getBoundingClientRect();
+    places.style.setProperty("--drawn", Math.min(1, Math.max(0, (line - box.top) / box.height)).toFixed(3));
+    let rowTop = null;
+    for (const place of places.children) {
+      const top = place.getBoundingClientRect().top;
+      // A city that shares a row with the one before it isn't on the line itself.
+      place.classList.toggle("beside", rowTop !== null && Math.abs(top - rowTop) < 2);
+      if (!place.classList.contains("beside")) rowTop = top;
+      place.classList.toggle("reached", top + 17 < line);
     }
   });
 }

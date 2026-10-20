@@ -2294,8 +2294,6 @@
         },
         {
           "name": "New Brunswick",
-          "local": "Nouveau-Brunswick",
-          "lang": "fr",
           "lat": 45.8177,
           "lng": -64.5767,
           "photos": [
@@ -2307,8 +2305,6 @@
         },
         {
           "name": "Prince Edward Island",
-          "local": "Île-du-Prince-Édouard",
-          "lang": "fr",
           "lat": 46.44,
           "lng": -63.38,
           "photos": [
