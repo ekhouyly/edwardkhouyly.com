@@ -9,6 +9,21 @@
           "weeks": {},
           "photos": [
             {
+              "src": "photos/2026/10/2026-10-20_dscf1480.jpg",
+              "thumb": "thumbs/2026/10/2026-10-20_dscf1480.jpg",
+              "small": "small/2026/10/2026-10-20_dscf1480.jpg",
+              "large": "large/2026/10/2026-10-20_dscf1480.jpg",
+              "bg": [
+                "#1b2024",
+                "#18262e"
+              ],
+              "caption": "",
+              "date": "2026-10-20",
+              "week": 43,
+              "w": 1706,
+              "h": 2560
+            },
+            {
               "src": "photos/2026/10/2026-10-06_img_3187.jpg",
               "thumb": "thumbs/2026/10/2026-10-06_img_3187.jpg",
               "small": "small/2026/10/2026-10-06_img_3187.jpg",
