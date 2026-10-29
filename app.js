@@ -223,8 +223,8 @@ function close() {
 }
 
 lightbox.querySelector(".lb-close").addEventListener("click", close);
-lightbox.querySelector(".lb-prev").addEventListener("click", () => show(current - 1));
-lightbox.querySelector(".lb-next").addEventListener("click", () => show(current + 1));
+lightbox.querySelector(".lb-prev").addEventListener("click", () => slide(-1));
+lightbox.querySelector(".lb-next").addEventListener("click", () => slide(1));
 lightbox.addEventListener("click", (e) => { if (e.target === lightbox || e.target.tagName === "FIGURE") close(); });
 
 document.addEventListener("keydown", (e) => {
@@ -233,17 +233,44 @@ document.addEventListener("keydown", (e) => {
     return;
   }
   if (e.key === "Escape") close();
-  if (e.key === "ArrowLeft") show(current - 1);
-  if (e.key === "ArrowRight") show(current + 1);
+  if (e.key === "ArrowLeft") slide(-1);
+  if (e.key === "ArrowRight") slide(1);
 });
 
-let touchX = null;
-lightbox.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
-lightbox.addEventListener("touchend", (e) => {
+// Moving to the next or previous photo slides the current one away and the new one in from the other side.
+// `from` is how far a swipe has already dragged the photo, so the slide carries on from the finger.
+const calm = matchMedia("(prefers-reduced-motion: reduce)");
+let sliding = false;
+async function slide(dir, from = 0) {
+  if (sliding) return;
+  if (calm.matches) { lbImg.style.transform = ""; return show(current + dir); }
+  sliding = true;
+  const far = Math.min(innerWidth * 0.4, 320);
+  const ease = "cubic-bezier(.2,.7,.2,1)";
+  await lbImg.animate([{ transform: `translateX(${from}px)`, opacity: 1 - Math.abs(from) / far / 2 }, { transform: `translateX(${-dir * far}px)`, opacity: 0 }],
+    { duration: 170, easing: "ease-in", fill: "forwards" }).finished;
+  lbImg.style.transform = "";
+  show(current + dir);
+  const enter = lbImg.animate([{ transform: `translateX(${dir * far}px)`, opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 300, easing: ease });
+  lbImg.getAnimations().filter((a) => a !== enter).forEach((a) => a.cancel());
+  await enter.finished.catch(() => {});
+  sliding = false;
+}
+
+// On touch screens the photo follows the finger, then slides on or springs back.
+let touchX = null, dragX = 0;
+lightbox.addEventListener("touchstart", (e) => { if (!sliding) { touchX = e.touches[0].clientX; dragX = 0; } }, { passive: true });
+lightbox.addEventListener("touchmove", (e) => {
   if (touchX === null) return;
-  const dx = e.changedTouches[0].clientX - touchX;
-  if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+  dragX = e.touches[0].clientX - touchX;
+  lbImg.style.transform = `translateX(${dragX}px)`;
+}, { passive: true });
+lightbox.addEventListener("touchend", () => {
+  if (touchX === null) return;
   touchX = null;
+  if (Math.abs(dragX) > 50) return slide(dragX < 0 ? 1 : -1, dragX);
+  lbImg.style.transform = "";
+  if (dragX) lbImg.animate([{ transform: `translateX(${dragX}px)` }, { transform: "none" }], { duration: 220, easing: "cubic-bezier(.2,.7,.2,1)" });
 });
 
 // ---- Trips: a card for each trip, and a page with a map of where its photos were taken ----
