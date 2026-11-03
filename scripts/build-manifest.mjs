@@ -98,4 +98,17 @@ for (const f of ["app.js", "styles.css"]) {
   const v = createHash("sha1").update(readFileSync(join(site, f))).digest("hex").slice(0, 8);
   html = html.replace(new RegExp(`${f.replace(".", "\\.")}(\\?v=\\w+)?"`), `${f}?v=${v}"`);
 }
+// A plain list of every photo, for search engines and anyone browsing without JavaScript.
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const fallback = years.map(({ year, months }) => [
+  `      <h2>${year}</h2>`,
+  ...months.map(({ month, photos }) => {
+    const label = `${MONTH_NAMES[month - 1]} ${year}`;
+    const items = photos.map((p) => `        <a href="${p.src}"><img src="${p.thumb || p.src}" alt="${esc(p.caption || `Photograph, ${label}`)}" width="${p.w}" height="${p.h}" loading="lazy"></a>`);
+    return [`      <h3>${label}</h3>`, ...items].join("\n");
+  }),
+].join("\n")).join("\n");
+html = html.replace(/(<!-- noscript:start[^>]*-->)[\s\S]*?(<!-- noscript:end -->)/,
+  `$1\n    <noscript>\n      <div class="noscript">\n${fallback}\n      </div>\n    </noscript>\n    $2`);
 writeFileSync(join(site, "index.html"), html);

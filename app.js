@@ -10,6 +10,11 @@ const lbCaption = lightbox.querySelector("figcaption");
 let flat = []; // every photo in display order, for lightbox prev/next
 let list = flat; // the photos the viewer is stepping through (all photos, or one trip)
 let current = 0;
+let pushed = false; // opening the viewer added a history entry, so Back (or ×) can step out of it again
+
+// Each photo's link name is its filename without the date, e.g. "dscf1478",
+// so a shared link keeps working if the photo's date changes.
+const photoId = (p) => p.src.split("/").pop().replace(/\.\w+$/, "").replace(/^\d{4}-\d{2}-\d{2}_/, "");
 
 // White or black background, remembered on this device.
 // The header and each trip page have a toggle.
@@ -84,6 +89,7 @@ function render({ years, more = [], trips = [] }) {
   highlightYearOnScroll();
   revealOnScroll();
   startHero(years);
+  route(); // open the trip or photo named in the link, if any
 }
 
 // Wide photos cross-fade behind the name at the top of the page.
@@ -138,7 +144,7 @@ function best(p, cover = false) {
 // One clickable thumbnail that opens the full photo in the viewer.
 // `items` is the list the viewer steps through from this photo.
 function tile(photo, where, items = flat) {
-  const index = items.push({ ...photo, label: where }) - 1;
+  const index = items.push({ ...photo, label: where, id: photoId(photo) }) - 1;
   const ratio = photo.w / photo.h;
   const img = el("img", {
     src: photo.thumb || photo.src, alt: photo.caption || where, loading: "lazy", decoding: "async",
@@ -157,6 +163,7 @@ function tile(photo, where, items = flat) {
   btn.style.setProperty("--r", ratio.toFixed(4));
   if (photo.bg) btn.style.setProperty("--bgi", `linear-gradient(${photo.bg[0]}, ${photo.bg[1]})`);
   btn.addEventListener("click", () => open(index, items));
+  items[index].btn = btn; // focused again when the viewer closes
   return btn;
 }
 
@@ -207,20 +214,63 @@ function show(i) {
   lbCaption.textContent = p.caption ? `${p.caption} · ${p.label}` : p.label;
   // warm the cache for the neighbours
   [current - 1, current + 1].forEach((n) => { new Image().src = best(list[(n + list.length) % list.length]); });
+  // keep the address bar on the photo being shown, so it can be copied and shared
+  if (!lightbox.hidden) history.replaceState(null, "", photoHash(p));
 }
 
-function open(i, items = flat) {
+// "#photo/dscf1478" on the main page, "#trip/korea/dscf1478" inside a trip.
+function photoHash(p) {
+  return openTripId ? `#trip/${openTripId}/${p.id}` : `#photo/${p.id}`;
+}
+
+// `fromLink` is true when the address already names the photo (a shared link, or Back/Forward).
+function open(i, items = flat, fromLink = false) {
   list = items;
   show(i);
+  if (!lightbox.hidden) return;
   lightbox.hidden = false;
+  // everything behind the viewer is skipped by Tab and screen readers until it closes
+  for (const n of document.body.children) if (n !== lightbox && n.tagName !== "SCRIPT") n.inert = true;
   document.body.style.overflow = "hidden";
   lightbox.querySelector(".lb-close").focus();
+  if (!fromLink) { history.pushState(null, "", photoHash(list[current])); pushed = true; }
+  else history.replaceState(null, "", photoHash(list[current]));
 }
 
+// Closing steps back out of the photo's history entry; route() then hides the viewer.
+// A viewer opened from a shared link has no entry to step back to, so it just drops the photo from the address.
 function close() {
-  lightbox.hidden = true;
-  if (tripPage.hidden) document.body.style.overflow = "";
+  if (pushed) return history.back();
+  hideViewer();
+  history.replaceState(null, "", openTripId ? `#trip/${openTripId}` : location.pathname + location.search);
 }
+
+function hideViewer() {
+  if (lightbox.hidden) return;
+  lightbox.hidden = true;
+  pushed = false;
+  for (const n of document.body.children) n.inert = false;
+  if (tripPage.hidden) document.body.style.overflow = "";
+  list[current]?.btn?.focus(); // back to the last photo looked at, scrolled into view
+}
+
+// Share the photo being viewed: the phone's share sheet where there is one, otherwise copy the link.
+const shareBtn = lightbox.querySelector(".lb-share");
+shareBtn.addEventListener("click", async () => {
+  const url = location.href;
+  if (navigator.share) {
+    try { await navigator.share({ title: document.title, url }); } catch {}
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    shareBtn.dataset.done = "Link copied";
+  } catch {
+    shareBtn.dataset.done = "Copy the address bar";
+  }
+  clearTimeout(shareBtn.timer);
+  shareBtn.timer = setTimeout(() => delete shareBtn.dataset.done, 1800);
+});
 
 lightbox.querySelector(".lb-close").addEventListener("click", close);
 lightbox.querySelector(".lb-prev").addEventListener("click", () => slide(-1));
@@ -233,6 +283,13 @@ document.addEventListener("keydown", (e) => {
     return;
   }
   if (e.key === "Escape") close();
+  if (e.key === "Tab") { // Tab goes round the viewer's buttons instead of leaving it
+    const buttons = [...lightbox.querySelectorAll("button")].filter((b) => b.offsetParent);
+    const at = buttons.indexOf(document.activeElement);
+    const next = at < 0 ? 0 : (at + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length;
+    buttons[next]?.focus();
+    e.preventDefault();
+  }
   if (e.key === "ArrowLeft") slide(-1);
   if (e.key === "ArrowRight") slide(1);
 });
@@ -278,6 +335,8 @@ lightbox.addEventListener("touchend", () => {
 const tripPage = document.getElementById("trip-page");
 const tripBody = document.getElementById("trip-body");
 let tripsById = new Map();
+let openTripId = null; // the trip page that is showing, if any
+let tripItems = []; // that trip's photos, in viewer order
 
 function renderTrips(trips, years) {
   if (!trips.length) return;
@@ -311,7 +370,6 @@ function renderTrips(trips, years) {
   if (!tripsById.size) return;
   section.hidden = false;
   yearNav.prepend(el("a", { href: "#trips", textContent: "Trips" }));
-  route();
 }
 
 // The trip's country flag (vendor/flags), shown before its name.
@@ -330,11 +388,19 @@ function dateSpan(photos) {
   return `${fmt(a, { month: "short", year: "numeric" })} – ${fmt(b, { month: "short", year: "numeric" })}`;
 }
 
+// The address decides what's showing: "#trip/<trip>" opens a trip page,
+// and "#photo/<photo>" or "#trip/<trip>/<photo>" opens that photo in the viewer.
 function route() {
-  const m = location.hash.match(/^#trip\/([\w-]+)/);
+  const m = location.hash.match(/^#trip\/([\w-]+)(?:\/([\w-]+))?/);
   const trip = m && tripsById.get(m[1]);
-  if (trip) openTrip(trip);
+  if (trip) { if (openTripId !== trip.id) openTrip(trip); }
   else if (!tripPage.hidden) closeTrip();
+  const id = trip ? m[2] : location.hash.match(/^#photo\/([\w-]+)/)?.[1];
+  const items = trip ? tripItems : flat;
+  const i = id ? items.findIndex((p) => p.id === id) : -1;
+  if (i < 0) return hideViewer();
+  if (lightbox.hidden) open(i, items, true);
+  else if (list[current] !== items[i]) { list = items; show(i); }
 }
 addEventListener("hashchange", route);
 
@@ -376,6 +442,8 @@ function openTrip(trip) {
       el("div", { className: "trip-map-wrap" }, [map, stops]),
     ]),
   );
+  openTripId = trip.id;
+  tripItems = items;
   tripPage.dataset.country = trip.country || "";
   document.getElementById("trip-bar-name").textContent = trip.name;
   tripPage.hidden = false;
@@ -387,6 +455,8 @@ function openTrip(trip) {
 }
 
 function closeTrip() {
+  openTripId = null;
+  tripItems = [];
   tripPage.hidden = true;
   tripBody.replaceChildren();
   document.body.style.overflow = "";

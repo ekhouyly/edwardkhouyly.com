@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ekhouyly.github.io/edwardkhouyly.com/sitemap.xml
