@@ -30,6 +30,14 @@ The map uses Leaflet (kept in `vendor/leaflet/`) with a drawn outline map instea
 
 Works as-is on GitHub Pages, Netlify or Vercel. Once the domain is set up, add it under Settings → Pages → Custom domain.
 
+## Photo links
+
+Opening a photo puts it in the address, e.g. `#photo/dscf1478` (or `#trip/korea/dscf1478` inside a trip), so any photo can be shared and the phone's Back button closes the viewer. The name is the part of the filename after the date, so links survive a date change but break if a photo is renamed or removed.
+
+## Search engines
+
+`build-manifest.mjs` also writes a plain list of every photo into `index.html` (between the `noscript` markers) for search engines and browsers without JavaScript. `robots.txt`, `sitemap.xml` and the canonical link in `index.html` use the github.io address; update all three when the custom domain goes live.
+
 ## Link preview
 
 `og.jpg` is the image shown when the link is shared. A GitHub Action (`.github/workflows/link-preview.yml`) runs `scripts/og.py` every morning to pick a new random wide photo; run it by hand from the Actions tab, or locally with `python3 scripts/og.py`.
