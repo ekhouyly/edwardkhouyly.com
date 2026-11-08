@@ -40,6 +40,10 @@ The viewer's share button links to `p/<name>.html` instead, a small page that `b
 
 `build-manifest.mjs` also writes a plain list of every photo into `index.html` (between the `noscript` markers) for search engines and browsers without JavaScript. `robots.txt`, `sitemap.xml` and the canonical link in `index.html` use the github.io address; update all three when the custom domain goes live.
 
+## Fonts
+
+Fraunces and Instrument Sans (both SIL Open Font License) are served from `fonts/` instead of Google Fonts, and their `@font-face` rules sit at the top of `styles.css`. Each font comes in latin, latin-ext and vietnamese parts, and browsers download only the parts a page uses.
+
 ## Link preview
 
 `og.jpg` is the image shown when the link is shared. A GitHub Action (`.github/workflows/link-preview.yml`) runs `scripts/og.py` every morning to pick a new random wide photo; run it by hand from the Actions tab, or locally with `python3 scripts/og.py`.
