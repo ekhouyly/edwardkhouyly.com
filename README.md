@@ -22,6 +22,19 @@ A static photo gallery: favourite photos grouped by year and month, with a full-
 
 The map uses Leaflet (kept in `vendor/leaflet/`) with a drawn outline map instead of street tiles. After changing `trips.json`, run `node scripts/build-maps.mjs` to rebuild `photos/maps/<trip>.json` from the Natural Earth coastlines in `scripts/data/` (world-atlas and topojson-client, both ISC licensed).
 
+## Selling prints
+
+`photos/prints.json` connects the site to the Etsy shop:
+
+```json
+{
+  "shop": "https://www.etsy.com/shop/YourShopName",
+  "listings": { "dscf1478": "https://www.etsy.com/listing/1234567890" }
+}
+```
+
+When `shop` is set, a "Prints" button appears next to Instagram at the bottom of the page. Each photo named in `listings` (its filename without the date, as in its `#photo/` link) gets a "Buy print" button in the viewer that opens its Etsy listing. No rebuild needed; just commit the file.
+
 ## Previewing locally
 
 `python3 -m http.server` in this folder, then open http://localhost:8000.

@@ -41,6 +41,26 @@ fetch("photos/manifest.json", { cache: "no-cache" }) // always pick up newly add
   .then(render)
   .catch(() => { gallery.textContent = "Photos could not be loaded."; });
 
+// Photos that can be bought as prints, each pointing at its Etsy listing (photos/prints.json).
+// "shop" is the Etsy shop's address; "listings" maps a photo's link name (e.g. "dscf1478") to its listing.
+let listings = {};
+const buyLink = document.getElementById("lb-buy");
+fetch("photos/prints.json", { cache: "no-cache" })
+  .then((r) => (r.ok ? r.json() : {}))
+  .then(({ shop, listings: l = {} }) => {
+    listings = l;
+    const shopLink = document.getElementById("shop-link");
+    if (shop) { shopLink.href = shop; shopLink.hidden = false; }
+    if (!lightbox.hidden) updateBuyLink(list[current]);
+  })
+  .catch(() => {});
+
+function updateBuyLink(p) {
+  const url = p && listings[p.id];
+  buyLink.hidden = !url;
+  if (url) buyLink.href = url;
+}
+
 function el(tag, attrs = {}, children = []) {
   const node = Object.assign(document.createElement(tag), attrs);
   node.append(...children);
@@ -212,6 +232,7 @@ function show(i) {
   document.getElementById("lb-count").textContent = `${current + 1} / ${list.length}`;
   lbImg.alt = p.caption || p.label;
   lbCaption.textContent = p.caption ? `${p.caption} · ${p.label}` : p.label;
+  updateBuyLink(p);
   // warm the cache for the neighbours
   [current - 1, current + 1].forEach((n) => { new Image().src = best(list[(n + list.length) % list.length]); });
   // keep the address bar on the photo being shown, so it can be copied and shared
@@ -284,7 +305,7 @@ document.addEventListener("keydown", (e) => {
   }
   if (e.key === "Escape") close();
   if (e.key === "Tab") { // Tab goes round the viewer's buttons instead of leaving it
-    const buttons = [...lightbox.querySelectorAll("button")].filter((b) => b.offsetParent);
+    const buttons = [...lightbox.querySelectorAll("button, a[href]")].filter((b) => b.offsetParent);
     const at = buttons.indexOf(document.activeElement);
     const next = at < 0 ? 0 : (at + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length;
     buttons[next]?.focus();

@@ -251,6 +251,7 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .about-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 28px 0 56px; }
 .about-link { display: inline-flex; align-items: center; gap: 9px; padding: 11px 20px 11px 16px; border-radius: 999px; background: var(--fg); color: var(--bg) !important; font-weight: 500; font-size: 15px; text-decoration: none; transition: transform .2s, opacity .2s; }
 .about-link:hover { transform: translateY(-2px); opacity: .9; }
+.about-link[hidden] { display: none; }
 .about-link svg { width: 18px; height: 18px; }
 .footer-small { font-size: 13px; }
 .footer-small a { text-decoration: none; border-bottom: 1px solid var(--line); }
@@ -283,6 +284,14 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .lightbox button:focus-visible { outline: 1px solid #888; }
 .lb-close { font-size: 26px !important; }
 .lb-actions { display: flex; gap: 8px; }
+.lb-buy {
+  display: inline-flex; align-items: center; height: 48px; padding: 0 20px; border-radius: 999px;
+  background: #f4f2ee; color: #111; font-size: 14px; font-weight: 500; letter-spacing: .02em; text-decoration: none;
+  transition: background .2s, transform .2s;
+}
+.lb-buy[hidden] { display: none; }
+.lb-buy:hover { background: #fff; transform: translateY(-1px); }
+.lb-buy:focus-visible { outline: 1px solid #888; outline-offset: 2px; }
 .lb-share { position: relative; display: grid; place-items: center; }
 .lb-share svg { width: 20px; height: 20px; }
 .lb-share[data-done]::after {
