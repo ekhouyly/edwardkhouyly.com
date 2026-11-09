@@ -278,7 +278,9 @@ function hideViewer() {
 // Share the photo being viewed: the phone's share sheet where there is one, otherwise copy the link.
 const shareBtn = lightbox.querySelector(".lb-share");
 shareBtn.addEventListener("click", async () => {
-  const url = location.href;
+  // the photo's share page, so the link preview shows this photo rather than the site's usual one
+  const p = list[current];
+  const url = new URL(`p/${p.id}.html${openTripId ? `?trip=${openTripId}` : ""}`, location.href).href;
   if (navigator.share) {
     try { await navigator.share({ title: document.title, url }); } catch {}
     return;

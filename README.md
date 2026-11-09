@@ -47,9 +47,15 @@ Works as-is on GitHub Pages, Netlify or Vercel. Once the domain is set up, add i
 
 Opening a photo puts it in the address, e.g. `#photo/dscf1478` (or `#trip/korea/dscf1478` inside a trip), so any photo can be shared and the phone's Back button closes the viewer. The name is the part of the filename after the date, so links survive a date change but break if a photo is renamed or removed.
 
+The viewer's share button links to `p/<name>.html` instead, a small page that `build-manifest.mjs` writes for every photo. Its link preview (WhatsApp, iMessage, Discord and so on) shows that photo, and it sends visitors straight on to the photo in the gallery. A copied `#photo/...` address still works, but its preview is the site's usual `og.jpg`. Update `SITE` in `build-manifest.mjs` when the custom domain goes live.
+
 ## Search engines
 
 `build-manifest.mjs` also writes a plain list of every photo into `index.html` (between the `noscript` markers) for search engines and browsers without JavaScript. `robots.txt`, `sitemap.xml` and the canonical link in `index.html` use the github.io address; update all three when the custom domain goes live.
+
+## Fonts
+
+Fraunces and Instrument Sans (both SIL Open Font License) are served from `fonts/` instead of Google Fonts, and their `@font-face` rules sit at the top of `styles.css`. Each font comes in latin, latin-ext and vietnamese parts, and browsers download only the parts a page uses.
 
 ## Link preview
 
