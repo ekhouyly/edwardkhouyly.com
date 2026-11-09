@@ -4,7 +4,7 @@
 //   { "title": "Summer in Lisbon", "weeks": { "35": "A wedding" }, "photos": { "IMG_0412.jpg": "Alfama at dusk" } }
 // Optional trips with map pins: photos/trips.json (photos are named by the part after the date, e.g. "img_0136").
 // Smaller copies (small/, large/) and placeholder colours come from: python3 scripts/derive.py
-import { readdirSync, readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync, existsSync, statSync, mkdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -112,3 +112,52 @@ const fallback = years.map(({ year, months }) => [
 html = html.replace(/(<!-- noscript:start[^>]*-->)[\s\S]*?(<!-- noscript:end -->)/,
   `$1\n    <noscript>\n      <div class="noscript">\n${fallback}\n      </div>\n    </noscript>\n    $2`);
 writeFileSync(join(site, "index.html"), html);
+
+// A tiny share page for each photo, p/<name>.html. Link previews (WhatsApp, iMessage, Discord...)
+// can't see which photo the gallery has open, so the share button links here instead:
+// this page names the photo as its preview image, then sends the visitor on to it in the gallery.
+// Change SITE when the custom domain goes live.
+const SITE = "https://ekhouyly.github.io/edwardkhouyly.com/";
+const shareDir = join(site, "p");
+rmSync(shareDir, { recursive: true, force: true }); // drop pages for removed photos
+mkdirSync(shareDir);
+let pages = 0;
+for (const { year, months } of years) {
+  for (const { month, photos } of months) {
+    for (const p of photos) {
+      const id = p.src.split("/").pop().replace(/\.\w+$/, "").replace(/^\d{4}-\d{2}-\d{2}_/, "");
+      const when = p.date ? new Date(`${p.date}T00:00:00Z`).toLocaleDateString("en", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) : `${MONTH_NAMES[month - 1]} ${year}`;
+      const title = p.caption ? `${p.caption} · Edward Khouy-Ly` : "A photograph by Edward Khouy-Ly";
+      const img = p.thumb || p.src;
+      const { w, h } = dimensions(join(site, img));
+      writeFileSync(join(shareDir, `${id}.html`), `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>${esc(title)}</title>
+  <meta name="robots" content="noindex">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Edward Khouy-Ly · Photographs">
+  <meta property="og:title" content="${esc(title)}">
+  <meta property="og:description" content="${esc(when)} · @eklphotos">
+  <meta property="og:url" content="${SITE}p/${id}.html">
+  <meta property="og:image" content="${SITE}${img}">
+  <meta property="og:image:width" content="${w}">
+  <meta property="og:image:height" content="${h}">
+  <meta property="og:image:alt" content="${esc(p.caption || `Photograph, ${when}`)}">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>
+    // ?trip=<id> opens the photo inside that trip's page
+    var trip = (location.search.match(/[?&]trip=([\\w-]+)/) || [])[1];
+    location.replace("../" + (trip ? "#trip/" + trip + "/" : "#photo/") + "${id}");
+  </script>
+  <meta http-equiv="refresh" content="0; url=../#photo/${id}">
+</head>
+<body><a href="../#photo/${id}">View the photo</a></body>
+</html>
+`);
+      pages++;
+    }
+  }
+}
+console.log(`p/: ${pages} share pages`);
