@@ -573,3 +573,186 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
 .noscript { padding: 24px var(--pad, 24px) 64px; }
 .noscript a { display: inline-block; margin: 0 6px 6px 0; }
 .noscript img { height: 160px; width: auto; border-radius: 4px; }
+
+/* ===================================================================
+   Store look (Nov 2026): a light grey page with white rounded cards,
+   the device's own system font set heavy and tight, blue pill buttons,
+   and two-tone headings ("Trips. Every place, on its own page.").
+   Everything above stays as the base; this layer only restyles it.
+   =================================================================== */
+:root {
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --bg: #f5f5f7; --card: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --line: #d2d2d7; --tile: #e8e8ed;
+  --header: rgba(245, 245, 247, 0.8); --accent: #0071e3; --blue: #0071e3; --blue-hover: #0077ed; --link: #0066cc;
+  --shadow: 2px 4px 12px rgba(0, 0, 0, .08); --shadow-hover: 2px 4px 16px rgba(0, 0, 0, .16);
+  --radius: 18px;
+}
+:root[data-theme="dark"] {
+  --bg: #000000; --card: #1d1d1f; --fg: #f5f5f7; --muted: #86868b; --line: #424245; --tile: #2c2c2e;
+  --header: rgba(22, 22, 23, 0.8); --accent: #2997ff; --link: #2997ff;
+  --shadow: 0 0 0 1px rgba(255, 255, 255, .06); --shadow-hover: 0 0 0 1px rgba(255, 255, 255, .14);
+}
+body { font-family: var(--sans); font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; }
+h1, h2, h3, .brand, .trip-bar-name { font-family: var(--sans) !important; }
+
+/* Two-tone headings: the first words in full colour, the rest in grey */
+.trips-head h2 span, .year-head h2 span, .trip-title h1 span, .about-title span { color: var(--muted); }
+
+/* Header: a thin frosted bar with small type */
+.site-header { padding-top: calc(10px + env(safe-area-inset-top, 0px)); padding-bottom: 10px; gap: 20px; }
+.site-header.solid { box-shadow: none; border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
+.brand { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.years a { font-size: 12px; font-weight: 400; letter-spacing: -0.01em; padding: 5px 10px; opacity: .8; }
+.years a.active { background: none; opacity: 1; font-weight: 600; }
+.order-prints { font-size: 12px; font-weight: 400; padding: 4px 11px; letter-spacing: -0.01em; background: var(--blue); }
+.order-prints:hover { background: var(--blue-hover); }
+.theme-toggle { width: 30px; height: 30px; border: 0; background: color-mix(in srgb, currentColor 10%, transparent); }
+.theme-toggle svg { width: 15px; height: 15px; }
+
+/* Hero: a big centred headline with a blue button and a text link under it */
+.hero { align-items: flex-end; justify-content: center; text-align: center; }
+.hero-shade { background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 40%, rgba(0,0,0,.7) 100%); }
+.hero-text { padding-bottom: clamp(72px, 12vh, 130px); max-width: 980px; }
+.eyebrow { font-size: 17px !important; font-weight: 600 !important; letter-spacing: -0.01em !important; text-transform: none !important; opacity: .9; margin-bottom: 6px !important; }
+.hero h1 { font-weight: 700; font-size: clamp(44px, 8vw, 96px); line-height: 1.04; letter-spacing: -0.04em; text-shadow: 0 2px 24px rgba(0,0,0,.25); }
+.hero-sub { margin: 12px auto 0; max-width: none; font-size: clamp(19px, 2.2vw, 28px); font-weight: 400; letter-spacing: -0.01em; opacity: .92; }
+.hero-ctas { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 14px 28px; margin-top: 26px; }
+.hero-ctas .link-more { color: #fff; }
+.hero-cue { display: none; }
+
+/* Buttons and links */
+.btn-blue {
+  display: inline-flex; align-items: center; justify-content: center; padding: 11px 22px; border-radius: 980px;
+  background: var(--blue); color: #fff !important; font-size: 17px; font-weight: 400; letter-spacing: -0.02em; text-decoration: none;
+  transition: background .2s, transform .2s;
+}
+.btn-blue[hidden] { display: none; }
+.btn-blue:hover { background: var(--blue-hover); }
+.btn-blue:active { transform: scale(.97); }
+.btn-blue:focus-visible, .link-more:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.link-more { color: var(--link); font-size: 17px; text-decoration: none; letter-spacing: -0.02em; }
+.link-more::after { content: " ›"; }
+.link-more:hover { text-decoration: underline; }
+
+/* Section headings */
+.trips { padding-top: clamp(56px, 8vw, 100px); }
+.trips-head { margin-bottom: 26px; }
+.trips-head h2 { font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -0.03em; }
+
+/* Trips: a sideways shelf of tall cards with the name at the top */
+.trip-cards {
+  grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: clamp(250px, 26vw, 400px); gap: 20px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad);
+  margin: 0 calc(-1 * var(--pad)); padding: 6px var(--pad) 34px; scrollbar-width: none;
+}
+.trip-cards::-webkit-scrollbar { display: none; }
+.trip-item { scroll-snap-align: start; }
+.trip-card { aspect-ratio: 4 / 5.4; border-radius: var(--radius); box-shadow: var(--shadow); transition: box-shadow .3s, transform .3s cubic-bezier(0,0,.5,1); }
+.trip-card:hover { box-shadow: var(--shadow-hover); transform: scale(1.012); }
+.trip-card:hover > img { transform: none; }
+.trip-card::after { background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 38%); }
+.trip-card-text { top: 26px; bottom: auto; left: 26px; right: 26px; }
+.trip-card h3 { font-weight: 600; font-size: 28px; letter-spacing: -0.03em; line-height: 1.1; }
+.trip-card p { margin-top: 6px; font-size: 14px; letter-spacing: -0.01em; opacity: .9; }
+.trip-card:focus-visible { outline-color: var(--blue); }
+
+/* Years and months: each month sits on its own white card */
+#gallery { padding-top: clamp(24px, 4vw, 56px); }
+.year { margin-bottom: clamp(56px, 8vw, 110px); }
+.year-head { margin-bottom: 26px; }
+.year-head h2 { font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -0.03em; }
+.year-head h2 span { font-variant-numeric: normal; }
+.year > h2 { font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -0.03em; }
+.month {
+  background: var(--card); border: 0; border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: clamp(22px, 3vw, 40px); margin-bottom: 20px;
+}
+.month-head { top: 76px; }
+.month h3 { font-weight: 600; font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -0.03em; line-height: 1.1; }
+.month-title { font-family: var(--sans); font-style: normal; font-weight: 600; font-size: 14px; color: #bf4800; letter-spacing: -0.01em; }
+:root[data-theme="dark"] .month-title { color: #ff791b; }
+.month-count { font-size: 14px; letter-spacing: -0.01em; }
+.weeks { gap: 28px; }
+.week h4 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; text-transform: none; margin-bottom: 12px; }
+.week h4::before { display: none; }
+.week h4 span { letter-spacing: -0.01em; }
+.week h4 em { font-family: var(--sans); font-style: normal; font-weight: 600; font-size: 14px; color: #bf4800; }
+:root[data-theme="dark"] .week h4 em { color: #ff791b; }
+.grid button { border-radius: 12px; }
+.tile-date { letter-spacing: -0.01em; font-size: 13px; }
+.grid button:focus-visible { outline-color: var(--blue); }
+
+/* Footer */
+.site-footer { border-top: 0; margin-top: 0; padding-top: clamp(64px, 8vw, 100px); }
+.about-eyebrow { color: var(--muted); font-size: 17px; font-weight: 600; letter-spacing: -0.01em; text-transform: none; }
+.about-title { margin-top: 4px; font-weight: 600; font-size: clamp(32px, 4.4vw, 48px); line-height: 1.08; letter-spacing: -0.035em; }
+.about-text { font-size: 19px; letter-spacing: -0.015em; }
+.about-camera { letter-spacing: -0.01em; }
+.about-link { border-radius: 980px; font-weight: 400; font-size: 17px; letter-spacing: -0.02em; background: var(--fg); }
+.footer-small { font-size: 12px; letter-spacing: -0.01em; }
+.footer-small a { border-bottom: 0; color: var(--link); }
+
+/* Trip and prints pages */
+.trip-bar { padding-top: calc(10px + env(safe-area-inset-top, 0px)); padding-bottom: 10px; box-shadow: none; border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
+.trip-back { font-weight: 400; font-size: 14px; color: var(--link); background: none; padding-left: 0; }
+.trip-back:hover { background: none; text-decoration: underline; }
+.trip-bar-name { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.trip-title h1 { font-weight: 700; font-size: clamp(40px, 6.4vw, 80px); line-height: 1.05; letter-spacing: -0.045em; }
+.trip-title p { font-size: 17px; letter-spacing: -0.015em; text-transform: none; }
+.trip-title::after { height: 3px; width: 48px; }
+.trip-map-head .eyebrow { font-size: 17px !important; }
+.trip-map-head h2 { font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -0.03em; }
+.trip-map { border-radius: var(--radius); box-shadow: var(--shadow); }
+.trip-map.leaflet-container, .leaflet-tooltip.pin-label, .pin span { font-family: var(--sans); }
+.trip-stops button { background: var(--card); border: 0; border-radius: 14px; box-shadow: var(--shadow); }
+.trip-stops button:hover { background: var(--card); box-shadow: var(--shadow-hover); }
+.stop-name { font-family: var(--sans); font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
+.stop-meta { font-size: 13px; letter-spacing: -0.01em; }
+.place h3 { font-weight: 600; font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -0.03em; }
+.place h3 span { font-family: var(--sans); font-size: 14px; letter-spacing: -0.01em; }
+.place h3 .place-local { font-family: var(--sans); font-weight: 600; }
+.trip-map-section { border-top: 0; }
+
+/* Prints: a store shelf of product cards */
+.trip-title:has(h1 span)::after { display: none; }
+.prints-how { font-size: 19px; letter-spacing: -0.015em; }
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 20px; }
+.product {
+  display: flex; flex-direction: column; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow: hidden; transition: box-shadow .3s, transform .3s cubic-bezier(0,0,.5,1);
+}
+.product:hover { box-shadow: var(--shadow-hover); transform: scale(1.01); }
+.product-photo { position: relative; aspect-ratio: 1; }
+.product-photo button {
+  position: absolute; inset: 28px 28px 0; display: block; width: auto; height: auto; padding: 0; border: 0; background: none; cursor: zoom-in;
+}
+.product-photo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 18px rgba(0,0,0,.18)); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.product:hover .product-photo img { transform: scale(1.02); }
+.product-photo .tile-date { display: none; }
+.product-info { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 22px 28px 28px; }
+.product-kicker { margin: 0; color: #bf4800; font-size: 12px; font-weight: 600; letter-spacing: -0.01em; }
+:root[data-theme="dark"] .product-kicker { color: #ff791b; }
+.product h3 { margin: 0; font-size: 21px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; }
+.product-meta { margin: 0 0 14px; color: var(--muted); font-size: 14px; letter-spacing: -0.01em; }
+.product .btn-blue { padding: 8px 18px; font-size: 14px; }
+.prints-shop .order-prints { font-size: 17px; padding: 11px 22px; }
+
+/* Photo viewer: same type */
+.lightbox, .lb-buy { font-family: var(--sans); letter-spacing: -0.01em; }
+.lb-buy { background: var(--blue) !important; color: #fff !important; }
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .month { padding: 18px; border-radius: 14px; }
+  .trip-cards { grid-auto-columns: 74%; gap: 14px; }
+  .trip-card h3 { font-size: 24px; }
+  .trip-card-text { top: 20px; left: 20px; right: 20px; }
+  .grid button { border-radius: 8px; }
+}
+@media (max-width: 480px) {
+  .brand { font-size: 15px; }
+  .years a { font-size: 12px; padding: 5px 7px; }
+  .order-prints { font-size: 12px; padding: 4px 10px; }
+  .hero-ctas { gap: 12px 22px; }
+  .btn-blue, .link-more { font-size: 15px; }
+}

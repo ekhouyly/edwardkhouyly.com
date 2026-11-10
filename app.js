@@ -44,21 +44,24 @@ fetch("photos/manifest.json", { cache: "no-cache" }) // always pick up newly add
 // Photos that can be bought as prints, each pointing at its Etsy listing (photos/prints.json).
 // "shop" is the Etsy shop's address; "listings" maps a photo's link name (e.g. "dscf1478") to its listing.
 let listings = {};
+let printTitles = {}; // short names of the prints, from the listing titles (photos/prints.json "titles")
 let shopUrl = "";
 const buyLink = document.getElementById("lb-buy");
 const printsLoaded = fetch("photos/prints.json", { cache: "no-cache" })
   .then((r) => (r.ok ? r.json() : {}))
-  .then(({ shop, listings: l = {} }) => {
+  .then(({ shop, listings: l = {}, titles = {} }) => {
     listings = l;
+    printTitles = titles;
     const shopLink = document.getElementById("shop-link");
     if (shop) {
       shopLink.href = shop; shopLink.hidden = false;
       shopUrl = shop;
       // The blue button in the top menu opens the page of photos on sale, or the shop itself while nothing is listed.
-      const order = document.getElementById("order-prints");
-      if (Object.keys(l).length) order.href = "#prints";
-      else Object.assign(order, { href: shop, target: "_blank", rel: "noopener" });
-      order.hidden = false;
+      for (const order of [document.getElementById("order-prints"), document.getElementById("hero-shop")]) {
+        if (Object.keys(l).length) order.href = "#prints";
+        else Object.assign(order, { href: shop, target: "_blank", rel: "noopener" });
+        order.hidden = false;
+      }
     }
     if (!lightbox.hidden) updateBuyLink(list[current]);
   })
@@ -86,7 +89,7 @@ function render({ years, more = [], trips = [] }) {
     const count = months.reduce((n, m) => n + m.photos.length, 0);
     const meta = `${count} photo${count === 1 ? "" : "s"} · ${months.length} month${months.length === 1 ? "" : "s"}`;
     const section = el("section", { className: "year", id: `y${year}` }, [
-      el("div", { className: "year-head" }, [el("h2", { textContent: year }), el("p", { className: "year-meta", textContent: meta })]),
+      el("div", { className: "year-head" }, [el("h2", {}, [`${year}.`, el("span", { textContent: ` ${meta}.` })])]),
     ]);
 
     for (const { month, title, weeks: weekTitles = {}, photos } of months) {
@@ -495,24 +498,35 @@ function openTrip(trip) {
   drawMap(map, trip);
 }
 
-// The photos that have an Etsy listing, newest listing first. Opening one shows it with its "Buy print" button.
+// The photos that have an Etsy listing, newest listing first, laid out like a store shelf:
+// each card shows the photo (tap to view it large), its name, where and when it was taken, and a Buy button.
 function openPrints() {
   const items = [];
-  const grid = el("div", { className: "grid" });
+  const grid = el("div", { className: "products" });
   const onSale = Object.keys(listings).reverse().map((id) => flat.find((p) => p.id === id)).filter(Boolean);
   for (const p of onSale) {
+    const where = placeOf(p.id);
+    const when = p.date ? new Date(`${p.date}T00:00:00Z`).toLocaleDateString("en", { month: "long", year: "numeric", timeZone: "UTC" }) : "";
     const btn = tile(p, "Available as a print", items);
-    btn.append(el("span", { className: "print-tag", textContent: "Buy print" }));
-    grid.append(btn);
+    btn.classList.add("in");
+    grid.append(el("article", { className: "product" }, [
+      el("div", { className: "product-photo" }, [btn]),
+      el("div", { className: "product-info" }, [
+        el("p", { className: "product-kicker", textContent: "Printed to order" }),
+        el("h3", { textContent: printTitles[p.id] || where || when }),
+        el("p", { className: "product-meta", textContent: [where, when].filter((x, i, a) => x && a.indexOf(x) === i).join(" · ") }),
+        el("a", { className: "btn-blue", href: listings[p.id], target: "_blank", rel: "noopener", textContent: "Buy" }),
+      ]),
+    ]));
   }
   const count = `${onSale.length} photograph${onSale.length === 1 ? "" : "s"}`;
   tripBody.replaceChildren(
     el("div", { className: "trip-title" }, [
-      el("h1", { textContent: "Order Prints" }),
+      el("h1", {}, ["Prints. ", el("span", { textContent: "Take home a favourite." })]),
       el("p", { textContent: `${count} · printed to order` }),
     ]),
-    el("p", { className: "prints-how", textContent: "Pick a photograph, then choose Buy print to see sizes and prices." }),
-    el("div", { className: "prints-grid" }, [grid]),
+    el("p", { className: "prints-how", textContent: "Tap a photograph to see it large, or choose Buy for sizes and prices." }),
+    grid,
     el("p", { className: "prints-shop" }, [
       el("a", { className: "order-prints", href: shopUrl, target: "_blank", rel: "noopener", textContent: "Visit Shop" }),
     ]),
@@ -527,6 +541,15 @@ function openPrints() {
   document.body.style.overflow = "hidden";
   tripPage.querySelectorAll(".grid button").forEach((b) => b.classList.add("in"));
   document.title = "Order Prints · Edward Khouy-Ly";
+}
+
+// "Busan, Korea" for a photo on a trip, otherwise "".
+function placeOf(id) {
+  for (const t of tripsById.values()) {
+    for (const pl of t.places) if (pl.photos.some((p) => photoId(p) === id)) return t.name.startsWith(pl.name) ? t.name : `${pl.name}, ${t.name}`;
+    if (t.others.some((p) => photoId(p) === id)) return t.name;
+  }
+  return "";
 }
 
 function closeTrip() {
