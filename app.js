@@ -57,7 +57,7 @@ const printsLoaded = fetch("photos/prints.json", { cache: "no-cache" })
       shopLink.href = shop; shopLink.hidden = false;
       shopUrl = shop;
       // The blue button in the top menu opens the page of photos on sale, or the shop itself while nothing is listed.
-      for (const order of [document.getElementById("order-prints"), document.getElementById("hero-shop")]) {
+      for (const order of [document.getElementById("order-prints")]) {
         if (Object.keys(l).length) order.href = "#prints";
         else Object.assign(order, { href: shop, target: "_blank", rel: "noopener" });
         order.hidden = false;
