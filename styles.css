@@ -232,6 +232,25 @@ a { color: inherit; }
 .theme-toggle svg { width: 16px; height: 16px; }
 .theme-toggle .moon, [data-theme="dark"] .theme-toggle .sun { display: block; }
 .theme-toggle .sun, [data-theme="dark"] .theme-toggle .moon { display: none; }
+/* The one call to action in the header: a solid blue pill between the years and the theme button. */
+.order-prints {
+  flex: none; margin-left: -12px; padding: 5px 14px; border-radius: 999px; white-space: nowrap; text-decoration: none;
+  background: #0071e3; color: #fff; font-weight: 500; font-size: 14px; transition: background .2s, transform .2s;
+}
+.order-prints[hidden] { display: none; }
+.order-prints:hover { background: #0a84ff; }
+.order-prints:active { transform: scale(.97); }
+.order-prints:focus-visible { outline: 2px solid #0071e3; outline-offset: 2px; }
+/* Prints page: the photos with an Etsy listing, in the trip page's frame */
+.prints-how { margin: 0 0 clamp(24px, 3vw, 40px); max-width: 60ch; color: var(--muted); font-size: 16px; }
+.prints-grid { --row: clamp(220px, 24vw, 380px); }
+.prints-grid .grid { --row: inherit; }
+.print-tag {
+  position: absolute; left: 10px; bottom: 10px; padding: 4px 11px; border-radius: 999px;
+  background: #0071e3; color: #fff; font: 500 12px/1.4 'Instrument Sans', sans-serif;
+}
+.prints-shop { margin: clamp(40px, 5vw, 64px) 0 0; }
+.prints-shop .order-prints { display: inline-block; margin: 0; padding: 10px 22px; font-size: 15px; }
 .years a.active { opacity: 1; background: color-mix(in srgb, currentColor 14%, transparent); }
 
 /* Hero */
@@ -488,6 +507,7 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
   .site-header { gap: 10px; }
   .brand { font-size: 16px; }
   .years a { padding: 5px 8px; font-size: 13px; }
+  .order-prints { margin-left: 0; padding: 5px 11px; font-size: 13px; }
   .theme-toggle { width: 30px; height: 30px; }
 }
 @media (max-width: 640px) {
