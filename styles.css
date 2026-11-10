@@ -232,6 +232,15 @@ a { color: inherit; }
 .theme-toggle svg { width: 16px; height: 16px; }
 .theme-toggle .moon, [data-theme="dark"] .theme-toggle .sun { display: block; }
 .theme-toggle .sun, [data-theme="dark"] .theme-toggle .moon { display: none; }
+/* The one call to action in the menu: a solid blue pill, so it reads as a button rather than another section link. */
+.years a.order-prints {
+  flex: none; margin: 0 6px; padding: 5px 14px; opacity: 1; white-space: nowrap;
+  background: #0071e3; color: #fff; font-weight: 500; transition: background .2s, transform .2s;
+}
+.years a.order-prints[hidden] { display: none; }
+.years a.order-prints:hover { background: #0a84ff; }
+.years a.order-prints:active { transform: scale(.97); }
+.years a.order-prints:focus-visible { outline: 2px solid #0071e3; outline-offset: 2px; }
 .years a.active { opacity: 1; background: color-mix(in srgb, currentColor 14%, transparent); }
 
 /* Hero */
@@ -488,6 +497,7 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
   .site-header { gap: 10px; }
   .brand { font-size: 16px; }
   .years a { padding: 5px 8px; font-size: 13px; }
+  .years a.order-prints { margin: 0 4px 0 0; padding: 5px 11px; }
   .theme-toggle { width: 30px; height: 30px; }
 }
 @media (max-width: 640px) {

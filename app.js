@@ -50,7 +50,11 @@ fetch("photos/prints.json", { cache: "no-cache" })
   .then(({ shop, listings: l = {} }) => {
     listings = l;
     const shopLink = document.getElementById("shop-link");
-    if (shop) { shopLink.href = shop; shopLink.hidden = false; }
+    if (shop) {
+      shopLink.href = shop; shopLink.hidden = false;
+      const order = document.getElementById("order-prints"); // the blue button in the top menu
+      order.href = shop; order.hidden = false;
+    }
     if (!lightbox.hidden) updateBuyLink(list[current]);
   })
   .catch(() => {});
