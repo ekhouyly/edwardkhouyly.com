@@ -1,0 +1,25 @@
+name: Match Etsy listings to photos
+on:
+  schedule:
+    - cron: "30 9 * * *"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/sync-prints.mjs
+      - .github/workflows/sync-prints.yml
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # On a pull request this only reports what it would change.
+      - if: github.event_name == 'pull_request'
+        run: node scripts/sync-prints.mjs --dry-run
+      - if: github.event_name != 'pull_request'
+        run: |
+          node scripts/sync-prints.mjs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff --quiet || { git commit -am "New print listings from Etsy"; git pull --rebase; git push; }
