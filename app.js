@@ -94,18 +94,12 @@ function render({ years, more = [], trips = [] }) {
 
     for (const { month, title, weeks: weekTitles = {}, photos } of months) {
       const label = `${MONTHS[month - 1]} ${year}`;
-      const weeks = el("div", { className: "weeks" });
-      for (const { week, photos: inWeek } of groupByWeek(photos)) {
-        const grid = el("div", { className: "grid" });
-        for (const photo of inWeek) grid.append(tile(photo, week ? `Week ${week} · ${label}` : label));
-        const block = el("div", { className: "week" });
-        const weekTitle = week && weekTitles[week];
-        if (week) block.append(el("h4", {}, [`Week ${week}`, ...(weekTitle ? [el("em", { textContent: weekTitle })] : []), el("span", { textContent: weekRange(inWeek[0].date) })]));
-        block.append(grid);
-        weeks.append(block);
-      }
+      // One grid per month; week headings were dropped (Edward, Nov 2026). Named weeks, like a wedding, show under the month name.
+      const grid = el("div", { className: "grid" });
+      for (const photo of photos) grid.append(tile(photo, label));
+      const weeks = el("div", { className: "weeks" }, [grid]);
       const head = el("div", { className: "month-head" }, [el("h3", { textContent: MONTHS[month - 1] })]);
-      if (title) head.append(el("p", { className: "month-title", textContent: title }));
+      for (const t of [title, ...Object.values(weekTitles)].filter(Boolean)) head.append(el("p", { className: "month-title", textContent: t }));
       head.append(el("p", { className: "month-count", textContent: `${photos.length} photo${photos.length === 1 ? "" : "s"}` }));
       section.append(el("div", { className: "month", id: `y${year}-${String(month).padStart(2, "0")}` }, [head, weeks]));
     }
@@ -197,26 +191,6 @@ function tile(photo, where, items = flat) {
   btn.addEventListener("click", () => open(index, items));
   items[index].btn = btn; // focused again when the viewer closes
   return btn;
-}
-
-// Photos arrive newest first; consecutive photos in the same week share a block.
-function groupByWeek(photos) {
-  const groups = [];
-  for (const photo of photos) {
-    const last = groups.at(-1);
-    if (last && last.week === photo.week) last.photos.push(photo);
-    else groups.push({ week: photo.week, photos: [photo] });
-  }
-  return groups;
-}
-
-// "Aug 24 – 30" for the Monday-to-Sunday week containing the date.
-function weekRange(date) {
-  const d = new Date(`${date}T00:00:00Z`);
-  const monday = new Date(d - ((d.getUTCDay() + 6) % 7) * 864e5);
-  const sunday = new Date(+monday + 6 * 864e5);
-  const end = monday.getUTCMonth() === sunday.getUTCMonth() ? sunday.getUTCDate() : sunday.toLocaleDateString("en", SHORT);
-  return `${monday.toLocaleDateString("en", SHORT)} – ${end}`;
 }
 
 function highlightYearOnScroll() {
