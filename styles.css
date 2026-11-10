@@ -593,7 +593,7 @@ main { padding: 0 var(--pad); max-width: 1680px; margin: 0 auto; }
   --shadow: 0 0 0 1px rgba(255, 255, 255, .06); --shadow-hover: 0 0 0 1px rgba(255, 255, 255, .14);
 }
 body { font-family: var(--sans); font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; }
-h1, h2, h3, .brand, .trip-bar-name { font-family: var(--sans) !important; }
+.trip-title h1, h2, h3, .brand, .trip-bar-name { font-family: var(--sans) !important; }
 
 /* Two-tone headings: the first words in full colour, the rest in grey */
 .trips-head h2 span, .year-head h2 span, .trip-title h1 span, .about-title span { color: var(--muted); }
@@ -609,16 +609,8 @@ h1, h2, h3, .brand, .trip-bar-name { font-family: var(--sans) !important; }
 .theme-toggle { width: 30px; height: 30px; border: 0; background: color-mix(in srgb, currentColor 10%, transparent); }
 .theme-toggle svg { width: 15px; height: 15px; }
 
-/* Hero: a big centred headline with a blue button and a text link under it */
-.hero { align-items: flex-end; justify-content: center; text-align: center; }
-.hero-shade { background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 40%, rgba(0,0,0,.7) 100%); }
-.hero-text { padding-bottom: clamp(72px, 12vh, 130px); max-width: 980px; }
-.eyebrow { font-size: 17px !important; font-weight: 600 !important; letter-spacing: -0.01em !important; text-transform: none !important; opacity: .9; margin-bottom: 6px !important; }
-.hero h1 { font-weight: 700; font-size: clamp(44px, 8vw, 96px); line-height: 1.04; letter-spacing: -0.04em; text-shadow: 0 2px 24px rgba(0,0,0,.25); }
-.hero-sub { margin: 12px auto 0; max-width: none; font-size: clamp(19px, 2.2vw, 28px); font-weight: 400; letter-spacing: -0.01em; opacity: .92; }
-.hero-ctas { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 14px 28px; margin-top: 26px; }
-.hero-ctas .link-more { color: #fff; }
-.hero-cue { display: none; }
+/* Hero: kept as the original slideshow intro (serif name bottom-left, scroll cue), Edward's choice */
+.hero-text { font-family: 'Instrument Sans', system-ui, sans-serif; letter-spacing: normal; }
 
 /* Buttons and links */
 .btn-blue {
@@ -750,6 +742,5 @@ h1, h2, h3, .brand, .trip-bar-name { font-family: var(--sans) !important; }
   .brand { font-size: 15px; }
   .years a { font-size: 12px; padding: 5px 7px; }
   .order-prints { font-size: 12px; padding: 4px 10px; }
-  .hero-ctas { gap: 12px 22px; }
   .btn-blue, .link-more { font-size: 15px; }
 }
