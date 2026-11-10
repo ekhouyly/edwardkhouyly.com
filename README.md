@@ -35,6 +35,8 @@ The map uses Leaflet (kept in `vendor/leaflet/`) with a drawn outline map instea
 
 When `shop` is set, a "Prints" button appears next to Instagram at the bottom of the page. Each photo named in `listings` (its filename without the date, as in its `#photo/` link) gets a "Buy print" button in the viewer that opens its Etsy listing. No rebuild needed; just commit the file.
 
+Listings are matched automatically: once a day `.github/workflows/sync-prints.yml` runs `scripts/sync-prints.mjs`, which reads the shop's public Etsy feed and adds any listing whose title or description contains a line like `Ref: DSCF7417` (the photo's link name). Entries added by hand are kept.
+
 ## Previewing locally
 
 `python3 -m http.server` in this folder, then open http://localhost:8000.
