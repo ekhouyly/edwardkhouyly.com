@@ -509,12 +509,12 @@ function openPrints() {
   tripBody.replaceChildren(
     el("div", { className: "trip-title" }, [
       el("h1", { textContent: "Order Prints" }),
-      el("p", { textContent: `${count} · printed to order · sold through Etsy` }),
+      el("p", { textContent: `${count} · printed to order` }),
     ]),
-    el("p", { className: "prints-how", textContent: "Pick a photograph, then choose Buy print to see sizes and prices on Etsy." }),
+    el("p", { className: "prints-how", textContent: "Pick a photograph, then choose Buy print to see sizes and prices." }),
     el("div", { className: "prints-grid" }, [grid]),
     el("p", { className: "prints-shop" }, [
-      el("a", { className: "order-prints", href: shopUrl, target: "_blank", rel: "noopener", textContent: "Visit the Etsy shop" }),
+      el("a", { className: "order-prints", href: shopUrl, target: "_blank", rel: "noopener", textContent: "Visit Shop" }),
     ]),
   );
   openTripId = PRINTS;
