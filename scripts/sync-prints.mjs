@@ -20,6 +20,7 @@ const local = args.find((a) => !a.startsWith("--"));
 
 const prints = JSON.parse(readFileSync(file, "utf8"));
 prints.listings ??= {};
+prints.titles ??= {};
 const shop = prints.shop?.match(/etsy\.com\/(?:[a-z]{2}\/)?shop\/([\w-]+)/i)?.[1];
 if (!shop) { console.log("No Etsy shop set in photos/prints.json; nothing to do."); process.exit(0); }
 
@@ -64,6 +65,9 @@ for (const item of items) {
   const ref = text.match(/\bref(?:erence)?\s*[:#]\s*([\w-]+)/i)?.[1].toLowerCase();
   if (!ref || !photoIds.has(ref)) { unmatched.push(`${title}${ref ? ` (Ref "${ref}" is not a photo on the site)` : " (no Ref: line)"}`); continue; }
   if (prints.listings[ref] !== url) { prints.listings[ref] = url; changed++; console.log(`${ref} -> ${url}`); }
+  // "Centre Island Toronto Ferry Photo Print, Summer Ferry Ride, ..." -> "Centre Island Toronto Ferry"
+  const name = title.split(/\s*[,|]\s*|\s+[–—-]\s+/)[0].replace(/\s+(photo(graphy)?\s+)?(print|poster|wall art)$/i, "").trim();
+  if (name && prints.titles[ref] !== name) { prints.titles[ref] = name; changed++; }
 }
 
 console.log(`${items.length} listings in the feed, ${changed} new or updated, ${unmatched.length} not matched.`);
