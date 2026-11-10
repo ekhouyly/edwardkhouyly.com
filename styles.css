@@ -241,6 +241,16 @@ a { color: inherit; }
 .order-prints:hover { background: #0a84ff; }
 .order-prints:active { transform: scale(.97); }
 .order-prints:focus-visible { outline: 2px solid #0071e3; outline-offset: 2px; }
+/* Prints page: the photos with an Etsy listing, in the trip page's frame */
+.prints-how { margin: 0 0 clamp(24px, 3vw, 40px); max-width: 60ch; color: var(--muted); font-size: 16px; }
+.prints-grid { --row: clamp(220px, 24vw, 380px); }
+.prints-grid .grid { --row: inherit; }
+.print-tag {
+  position: absolute; left: 10px; bottom: 10px; padding: 4px 11px; border-radius: 999px;
+  background: #0071e3; color: #fff; font: 500 12px/1.4 'Instrument Sans', sans-serif;
+}
+.prints-shop { margin: clamp(40px, 5vw, 64px) 0 0; }
+.prints-shop .order-prints { display: inline-block; margin: 0; padding: 10px 22px; font-size: 15px; }
 .years a.active { opacity: 1; background: color-mix(in srgb, currentColor 14%, transparent); }
 
 /* Hero */

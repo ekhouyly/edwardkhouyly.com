@@ -44,16 +44,21 @@ fetch("photos/manifest.json", { cache: "no-cache" }) // always pick up newly add
 // Photos that can be bought as prints, each pointing at its Etsy listing (photos/prints.json).
 // "shop" is the Etsy shop's address; "listings" maps a photo's link name (e.g. "dscf1478") to its listing.
 let listings = {};
+let shopUrl = "";
 const buyLink = document.getElementById("lb-buy");
-fetch("photos/prints.json", { cache: "no-cache" })
+const printsLoaded = fetch("photos/prints.json", { cache: "no-cache" })
   .then((r) => (r.ok ? r.json() : {}))
   .then(({ shop, listings: l = {} }) => {
     listings = l;
     const shopLink = document.getElementById("shop-link");
     if (shop) {
       shopLink.href = shop; shopLink.hidden = false;
-      const order = document.getElementById("order-prints"); // the blue button in the top menu
-      order.href = shop; order.hidden = false;
+      shopUrl = shop;
+      // The blue button in the top menu opens the page of photos on sale, or the shop itself while nothing is listed.
+      const order = document.getElementById("order-prints");
+      if (Object.keys(l).length) order.href = "#prints";
+      else Object.assign(order, { href: shop, target: "_blank", rel: "noopener" });
+      order.hidden = false;
     }
     if (!lightbox.hidden) updateBuyLink(list[current]);
   })
@@ -113,7 +118,7 @@ function render({ years, more = [], trips = [] }) {
   highlightYearOnScroll();
   revealOnScroll();
   startHero(years);
-  route(); // open the trip or photo named in the link, if any
+  printsLoaded.then(route); // open the trip, prints page or photo named in the link, if any
 }
 
 // Wide photos cross-fade behind the name at the top of the page.
@@ -243,9 +248,14 @@ function show(i) {
   if (!lightbox.hidden) history.replaceState(null, "", photoHash(p));
 }
 
-// "#photo/dscf1478" on the main page, "#trip/korea/dscf1478" inside a trip.
+// The address of the page behind the viewer: "#trip/korea", "#prints", or nothing on the main page.
+function pageHash() {
+  return openTripId === PRINTS ? "#prints" : openTripId ? `#trip/${openTripId}` : "";
+}
+
+// "#photo/dscf1478" on the main page, "#trip/korea/dscf1478" inside a trip, "#prints/dscf1478" on the prints page.
 function photoHash(p) {
-  return openTripId ? `#trip/${openTripId}/${p.id}` : `#photo/${p.id}`;
+  return `${pageHash() || "#photo"}/${p.id}`;
 }
 
 // `fromLink` is true when the address already names the photo (a shared link, or Back/Forward).
@@ -267,7 +277,7 @@ function open(i, items = flat, fromLink = false) {
 function close() {
   if (pushed) return history.back();
   hideViewer();
-  history.replaceState(null, "", openTripId ? `#trip/${openTripId}` : location.pathname + location.search);
+  history.replaceState(null, "", pageHash() || location.pathname + location.search);
 }
 
 function hideViewer() {
@@ -284,7 +294,7 @@ const shareBtn = lightbox.querySelector(".lb-share");
 shareBtn.addEventListener("click", async () => {
   // the photo's share page, so the link preview shows this photo rather than the site's usual one
   const p = list[current];
-  const url = new URL(`p/${p.id}.html${openTripId ? `?trip=${openTripId}` : ""}`, location.href).href;
+  const url = new URL(`p/${p.id}.html${openTripId && openTripId !== PRINTS ? `?trip=${openTripId}` : ""}`, location.href).href;
   if (navigator.share) {
     try { await navigator.share({ title: document.title, url }); } catch {}
     return;
@@ -306,7 +316,7 @@ lightbox.addEventListener("click", (e) => { if (e.target === lightbox || e.targe
 
 document.addEventListener("keydown", (e) => {
   if (lightbox.hidden) {
-    if (e.key === "Escape" && !tripPage.hidden) location.hash = "trips";
+    if (e.key === "Escape" && !tripPage.hidden) location.hash = openTripId === PRINTS ? "top" : "trips";
     return;
   }
   if (e.key === "Escape") close();
@@ -362,7 +372,8 @@ lightbox.addEventListener("touchend", () => {
 const tripPage = document.getElementById("trip-page");
 const tripBody = document.getElementById("trip-body");
 let tripsById = new Map();
-let openTripId = null; // the trip page that is showing, if any
+let openTripId = null; // the trip page that is showing, if any (PRINTS for the prints page, which shares its layout)
+const PRINTS = "#prints";
 let tripItems = []; // that trip's photos, in viewer order
 
 function renderTrips(trips, years) {
@@ -415,15 +426,17 @@ function dateSpan(photos) {
   return `${fmt(a, { month: "short", year: "numeric" })} – ${fmt(b, { month: "short", year: "numeric" })}`;
 }
 
-// The address decides what's showing: "#trip/<trip>" opens a trip page,
-// and "#photo/<photo>" or "#trip/<trip>/<photo>" opens that photo in the viewer.
+// The address decides what's showing: "#trip/<trip>" opens a trip page, "#prints" the photos on sale,
+// and "#photo/<photo>", "#trip/<trip>/<photo>" or "#prints/<photo>" opens that photo in the viewer.
 function route() {
   const m = location.hash.match(/^#trip\/([\w-]+)(?:\/([\w-]+))?/);
   const trip = m && tripsById.get(m[1]);
+  const pm = location.hash.match(/^#prints(?:\/([\w-]+))?$/);
   if (trip) { if (openTripId !== trip.id) openTrip(trip); }
+  else if (pm) { if (openTripId !== PRINTS) openPrints(); }
   else if (!tripPage.hidden) closeTrip();
-  const id = trip ? m[2] : location.hash.match(/^#photo\/([\w-]+)/)?.[1];
-  const items = trip ? tripItems : flat;
+  const id = trip ? m[2] : pm ? pm[1] : location.hash.match(/^#photo\/([\w-]+)/)?.[1];
+  const items = trip || pm ? tripItems : flat;
   const i = id ? items.findIndex((p) => p.id === id) : -1;
   if (i < 0) return hideViewer();
   if (lightbox.hidden) open(i, items, true);
@@ -472,6 +485,7 @@ function openTrip(trip) {
   openTripId = trip.id;
   tripItems = items;
   tripPage.dataset.country = trip.country || "";
+  tripPage.querySelector(".trip-back").href = "#trips";
   document.getElementById("trip-bar-name").textContent = trip.name;
   tripPage.hidden = false;
   tripPage.scrollTop = 0;
@@ -479,6 +493,40 @@ function openTrip(trip) {
   tripPage.querySelectorAll(".grid button").forEach((b) => b.classList.add("in"));
   document.title = `${trip.name} · Edward Khouy-Ly`;
   drawMap(map, trip);
+}
+
+// The photos that have an Etsy listing, newest listing first. Opening one shows it with its "Buy print" button.
+function openPrints() {
+  const items = [];
+  const grid = el("div", { className: "grid" });
+  const onSale = Object.keys(listings).reverse().map((id) => flat.find((p) => p.id === id)).filter(Boolean);
+  for (const p of onSale) {
+    const btn = tile(p, "Available as a print", items);
+    btn.append(el("span", { className: "print-tag", textContent: "Buy print" }));
+    grid.append(btn);
+  }
+  const count = `${onSale.length} photograph${onSale.length === 1 ? "" : "s"}`;
+  tripBody.replaceChildren(
+    el("div", { className: "trip-title" }, [
+      el("h1", { textContent: "Order Prints" }),
+      el("p", { textContent: `${count} · printed to order · sold through Etsy` }),
+    ]),
+    el("p", { className: "prints-how", textContent: "Pick a photograph, then choose Buy print to see sizes and prices on Etsy." }),
+    el("div", { className: "prints-grid" }, [grid]),
+    el("p", { className: "prints-shop" }, [
+      el("a", { className: "order-prints", href: shopUrl, target: "_blank", rel: "noopener", textContent: "Visit the Etsy shop" }),
+    ]),
+  );
+  openTripId = PRINTS;
+  tripItems = items;
+  tripPage.dataset.country = "";
+  tripPage.querySelector(".trip-back").href = "#top";
+  document.getElementById("trip-bar-name").textContent = "Order Prints";
+  tripPage.hidden = false;
+  tripPage.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  tripPage.querySelectorAll(".grid button").forEach((b) => b.classList.add("in"));
+  document.title = "Order Prints · Edward Khouy-Ly";
 }
 
 function closeTrip() {
