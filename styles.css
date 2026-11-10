@@ -663,10 +663,8 @@ h1, h2, h3, .brand, .trip-bar-name { font-family: var(--sans) !important; }
 .year-head h2 { font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -0.03em; }
 .year-head h2 span { font-variant-numeric: normal; }
 .year > h2 { font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -0.03em; }
-.month {
-  background: var(--card); border: 0; border-radius: var(--radius); box-shadow: var(--shadow);
-  padding: clamp(22px, 3vw, 40px); margin-bottom: 20px;
-}
+/* Months sit straight on the page, divided by a thin line (no card) */
+.month { background: none; box-shadow: none; border-radius: 0; padding: 28px 0 0; margin-bottom: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); }
 .month-head { top: 76px; }
 .month h3 { font-weight: 600; font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -0.03em; line-height: 1.1; }
 .month-title { font-family: var(--sans); font-style: normal; font-weight: 600; font-size: 14px; color: #bf4800; letter-spacing: -0.01em; }
@@ -743,7 +741,6 @@ h1, h2, h3, .brand, .trip-bar-name { font-family: var(--sans) !important; }
 
 @media (max-width: 760px) {
   body { font-size: 16px; }
-  .month { padding: 18px; border-radius: 14px; }
   .trip-cards { grid-auto-columns: 74%; gap: 14px; }
   .trip-card h3 { font-size: 24px; }
   .trip-card-text { top: 20px; left: 20px; right: 20px; }
